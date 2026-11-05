@@ -1,14 +1,20 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+
+// Load environment variables reliably from server/.env or parent
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config(); // fallback to default
 const connectDB = require('./config/db');
 const notFound = require('./middleware/notFound');
 const errorHandler = require('./middleware/errorHandler');
-const healthRoutes = require('./routes/healthRoutes');
 
-// Load environment variables
-dotenv.config();
+// Route Handlers
+const healthRoutes = require('./routes/healthRoutes');
+const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
 
@@ -16,7 +22,7 @@ const app = express();
 const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 app.use(cors({
   origin: allowedOrigin,
-  credentials: true
+  credentials: true,
 }));
 
 // Body parsing middleware
@@ -26,12 +32,14 @@ app.use(cookieParser());
 
 // API Routes
 app.use('/api/health', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
 
 // Root route
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'TaskFlow Backend API is running'
+    message: 'TaskFlow Backend API is running',
   });
 });
 

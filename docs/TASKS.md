@@ -47,24 +47,24 @@ Do not mark tasks complete until verified in the actual workspace.
 
 ## Phase 2 — Backend
 
-- [ ] Create User model.
-- [ ] Create Task model.
-- [ ] Add registration with validation and password hashing.
-- [ ] Add login.
-- [ ] Add logout.
-- [ ] Add current-user endpoint.
-- [ ] Implement authentication middleware.
-- [ ] Implement task create.
-- [ ] Implement task list with search and filters.
-- [ ] Implement task detail.
-- [ ] Implement task update.
-- [ ] Implement task delete.
-- [ ] Implement dashboard statistics.
-- [ ] Add centralized error handling and 404 handler.
-- [ ] Test ownership isolation with two separate users.
-- [ ] Document API examples.
+- [x] Create User model (`server/models/User.js`: email normalization, bcrypt hashing, `select: false` password).
+- [x] Create Task model (`server/models/Task.js`: title, description, priority, status, dueDate, user ref, compound indexes).
+- [x] Add registration with validation and password hashing (`POST /api/auth/register`, express-validator).
+- [x] Add login (`POST /api/auth/login`, bcrypt password verification, JWT cookie & payload).
+- [x] Add logout (`POST /api/auth/logout`, cookie clear).
+- [x] Add current-user endpoint (`GET /api/auth/me`, auth protected).
+- [x] Implement authentication middleware (`server/middleware/authMiddleware.js`, cookie & Bearer token fallback).
+- [x] Implement task create (`POST /api/tasks`, validation, scoped to `req.user._id`).
+- [x] Implement task list with search and filters (`GET /api/tasks`, regex search, priority/status filters, newest-first sort).
+- [x] Implement task detail (`GET /api/tasks/:id`, strict user isolation).
+- [x] Implement task update (`PUT /api/tasks/:id`, status/priority/date updates, user isolation).
+- [x] Implement task delete (`DELETE /api/tasks/:id`, user isolation, confirmed 404 on re-fetch).
+- [x] Implement dashboard statistics (`GET /api/tasks/stats`, total, pending, in-progress, completed, overdue counts).
+- [x] Add centralized error handling and 404 handler (`notFound.js`, `errorHandler.js` handling Mongoose CastError, duplicate keys, validation errors, JWT).
+- [x] Test ownership isolation with two separate users (User A cannot READ, UPDATE, or DELETE User B's tasks - returns 404).
+- [x] Document API examples (Complete curl, endpoint tables, schemas, and live test suite).
 
-**Exit criteria:** All required APIs work and cross-user access is prevented.
+**Exit criteria:** All required APIs work and cross-user access is prevented. (Phase 2 complete and verified with 15/15 automated integration tests passing against live MongoDB Atlas cluster).
 
 ## Phase 3 — Frontend
 

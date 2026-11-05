@@ -77,17 +77,16 @@ At the start of each session:
 
 - Phase 0: Completed and approved.
 - Phase 1: Completed, hardened, and verified with live MongoDB Atlas connection on 2026-11-05.
+- Phase 2: Completed and 100% verified against live MongoDB Atlas cluster on 2026-11-05.
   - Workspace: `D:\TASKFLOW`
-  - Git Monorepo: Initialized at root (`D:\TASKFLOW`); client and server unified in same repository; hardened `.gitignore`.
-  - Backend: Express 4 REST API running on port 5000; syntax checks passed; `/api/health` tested and responding with HTTP 200.
-  - Database: MongoDB Atlas cluster `rajesh.hzsemnx.mongodb.net` successfully connected via Mongoose; `/api/health` reports `database: "connected"`.
-  - Frontend: React 19 + Vite 8 + Tailwind CSS 4; production build verified (`vite build` succeeded in 550ms).
-  - Frontend Architecture: Modular layout with `Navbar`, `Sidebar`, `Footer`, `AppLayout`, common components (`Button`, `Input`, `Loader`, `ErrorMessage`), and pages (`DashboardPage`, `TasksPage`, `HealthPage`) using `react-router-dom`.
-  - CORS & API: Axios preconfigured with `withCredentials: true`; backend CORS allows explicit origin `http://localhost:5173` with credentials.
-  - Git Security: Verified `.gitignore` excludes all `.env` files, `node_modules`, and `dist/`. No secrets tracked.
-  - Scope Discipline: Verified zero Phase 2 code (models, auth routes, task CRUD) implemented prematurely.
-  - Primary Auth Strategy: Single primary approach locked in: HTTP-only Cookie JWT (`sameSite: 'lax'` in dev; `none` in prod with `secure: true`).
-  - Next milestone: Phase 2 (Backend Models, Auth, Task CRUD, Search/Filter & Stats).
+  - Models: `server/models/User.js` (email lowercase, bcrypt hook, password hidden), `server/models/Task.js` (title max 100, description max 1000, priority & status enums, dueDate, user ref, compound indexes).
+  - Auth: `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`. HTTP-only secure cookie transport with Bearer token header fallback.
+  - Task CRUD: `POST /api/tasks`, `GET /api/tasks` (with search and status/priority filters), `GET /api/tasks/:id`, `PUT /api/tasks/:id`, `DELETE /api/tasks/:id`.
+  - Statistics: `GET /api/tasks/stats` providing `totalTasks`, `pendingTasks`, `inProgressTasks`, `completedTasks`, and dynamically calculated `overdueTasks`.
+  - Security & Isolation: Strict user scoping (`user: req.user._id`) on all queries. Cross-user read, update, and delete all return 404 (zero information leakage). Express-validator rules on all payloads.
+  - Centralized Error Handling: Custom 404 handler and error handler mapping CastError, duplicate keys (11000), validation errors, and JWT expiration.
+  - Live Testing: 15/15 automated integration tests passed against live MongoDB Atlas cluster with complete test data cleanup.
+  - Next milestone: Phase 3 (Frontend Authentication, Pages, Context, Task UI & Forms).
 
 ## 9. Open decisions and required user inputs
 

@@ -55,3 +55,4 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen, onPingApi, isCh
     </header>
   );
 }
+
