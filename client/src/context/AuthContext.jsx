@@ -21,7 +21,8 @@ export function AuthProvider({ children }) {
       setError(null);
       const data = await authService.getMe();
       if (data && data.success && data.data) {
-        setUser(data.data);
+        const userData = data.data.user || data.data;
+        setUser(userData);
       } else {
         setUser(null);
       }
@@ -45,8 +46,9 @@ export function AuthProvider({ children }) {
       setError(null);
       const data = await authService.login({ email, password });
       if (data && data.success && data.data) {
-        setUser(data.data);
-        return { success: true, user: data.data };
+        const userData = data.data.user || data.data;
+        setUser(userData);
+        return { success: true, user: userData };
       }
       throw new Error(data?.message || 'Login failed');
     } catch (err) {
@@ -64,8 +66,9 @@ export function AuthProvider({ children }) {
       setError(null);
       const data = await authService.register({ name, email, password });
       if (data && data.success && data.data) {
-        setUser(data.data);
-        return { success: true, user: data.data };
+        const userData = data.data.user || data.data;
+        setUser(userData);
+        return { success: true, user: userData };
       }
       throw new Error(data?.message || 'Registration failed');
     } catch (err) {
@@ -119,3 +122,4 @@ export function useAuth() {
 }
 
 export default AuthContext;
+

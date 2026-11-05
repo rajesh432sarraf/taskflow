@@ -60,12 +60,20 @@ export default function DashboardPage() {
       ]);
 
       if (statsRes.success) {
-        setStats(statsRes.data);
+        setStats(statsRes.data?.stats || statsRes.data || {
+          totalTasks: 0,
+          pendingTasks: 0,
+          inProgressTasks: 0,
+          completedTasks: 0,
+          overdueTasks: 0,
+        });
       }
 
       if (tasksRes.success) {
-        // Keep recent 5 tasks
-        setRecentTasks(tasksRes.data.slice(0, 5));
+        const taskList = Array.isArray(tasksRes.data)
+          ? tasksRes.data
+          : tasksRes.data?.tasks || [];
+        setRecentTasks(taskList.slice(0, 5));
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to load dashboard data');

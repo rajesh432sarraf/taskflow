@@ -118,3 +118,4 @@ Total: 15 | Passed: 15 | Failed: 0
 - Verify browser cookie exchange across full registration-to-dashboard workflow.
 - Edge-case testing: very long task titles, network disconnect simulations, session timeouts.
 - Responsive layout verification across phone, tablet, and widescreen desktop breakpoints.
+

@@ -58,7 +58,10 @@ export default function TasksPage() {
 
       const res = await taskService.getTasks(params);
       if (res.success) {
-        setTasks(res.data);
+        const taskList = Array.isArray(res.data)
+          ? res.data
+          : res.data?.tasks || [];
+        setTasks(taskList);
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to load tasks');

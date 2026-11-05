@@ -18,10 +18,20 @@ const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
 
-// CORS configuration - explicit client origin with credentials allowed
-const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+// CORS configuration - supports explicit client URL, localhost, and 127.0.0.1 with credentials
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+].filter(Boolean);
+
 app.use(cors({
-  origin: allowedOrigin,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS policy: Origin ${origin} not allowed`));
+  },
   credentials: true,
 }));
 
