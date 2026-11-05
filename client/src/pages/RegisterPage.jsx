@@ -213,7 +213,7 @@ export default function RegisterPage() {
 
         {/* Footer Credit */}
         <p className="mt-6 text-center text-xs text-[#667085]">
-          TaskFlow MVP &bull; Team Golden Eagles
+          TaskFlow &bull; Personal Task &amp; Productivity Manager
         </p>
       </div>
     </div>

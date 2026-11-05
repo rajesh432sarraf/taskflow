@@ -9,14 +9,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#667085] gap-2">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-[#202938]">TaskFlow</span>
-          <span>•</span>
-          <span>Built by Team Golden Eagles</span>
+          <span>&bull;</span>
+          <span>Personal Task &amp; Productivity Manager</span>
         </div>
         <div>
-          <span>Target Deadline: Friday, 6 November 2026</span>
+          <span>&copy; {new Date().getFullYear()} TaskFlow. All rights reserved.</span>
         </div>
       </div>
     </footer>
   );
 }
-
