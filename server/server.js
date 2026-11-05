@@ -12,9 +12,6 @@ dotenv.config();
 
 const app = express();
 
-// Database connection
-connectDB();
-
 // CORS configuration - explicit client origin with credentials allowed
 const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 app.use(cors({
@@ -45,9 +42,12 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 // Start server function with error listeners and graceful shutdown
-const startServer = (port = PORT) => {
+const startServer = async (port = PORT) => {
+  // Execute database connection before starting the Express server
+  await connectDB();
+
   const serverInstance = app.listen(port, () => {
-    console.log(`🚀 TaskFlow server running in ${process.env.NODE_ENV || 'development'} mode on port ${port}`);
+    console.log(`Server running on port ${port}`);
   });
 
   // Handle server-level errors (e.g. port already in use)
@@ -91,7 +91,9 @@ process.on('SIGTERM', () => handleShutdown('SIGTERM'));
 
 // Only start listening if run directly (prevents duplicate servers when required by tests)
 if (require.main === module) {
-  server = startServer();
+  startServer().then((s) => {
+    server = s;
+  });
 }
 
 module.exports = { app, startServer };
