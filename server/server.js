@@ -44,9 +44,54 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 TaskFlow server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+// Start server function with error listeners and graceful shutdown
+const startServer = (port = PORT) => {
+  const serverInstance = app.listen(port, () => {
+    console.log(`🚀 TaskFlow server running in ${process.env.NODE_ENV || 'development'} mode on port ${port}`);
+  });
+
+  // Handle server-level errors (e.g. port already in use)
+  serverInstance.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${port} is already in use. Please terminate any running node processes on port ${port}.`);
+    } else {
+      console.error(`❌ Server error: ${err.message}`);
+    }
+    process.exit(1);
+  });
+
+  return serverInstance;
+};
+
+// Global process error handlers
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Promise Rejection at:', promise, 'reason:', reason);
 });
 
-module.exports = { app, server };
+process.on('uncaughtException', (err) => {
+  console.error('❌ Uncaught Exception:', err.message);
+});
 
+// Graceful shutdown handlers
+let server = null;
+const handleShutdown = (signal) => {
+  console.log(`\n🛑 Received ${signal}. Shutting down gracefully...`);
+  if (server) {
+    server.close(() => {
+      console.log('✅ HTTP server closed.');
+      process.exit(0);
+    });
+  } else {
+    process.exit(0);
+  }
+};
+
+process.on('SIGINT', () => handleShutdown('SIGINT'));
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+
+// Only start listening if run directly (prevents duplicate servers when required by tests)
+if (require.main === module) {
+  server = startServer();
+}
+
+module.exports = { app, startServer };

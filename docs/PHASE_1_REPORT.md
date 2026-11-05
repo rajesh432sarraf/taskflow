@@ -182,14 +182,52 @@ npm run dev
 
 ---
 
-## 8. Final Phase 1 Verification Matrix
+## 8. Runtime Crash Incident, Root Cause Analysis & Hardening
+
+During runtime testing with `nodemon`, the following console crash occurred:
+```text
+Warning: MONGO_URI is not set. Database connection skipped.
+TaskFlow server running in development mode on port 5000.
+[nodemon] app crashed - waiting for file changes before starting...
+```
+
+### 8.1 Root Cause Identified
+1. **Unconditional Top-Level Server Startup:** `server.js` called `app.listen()` directly at file execution without guarding with `if (require.main === module)`. Any external require/import or nodemon child respawn triggered an immediate duplicate listener race condition.
+2. **Missing `server.on('error')` Event Listener:** When a port conflict (`EADDRINUSE`) or socket error occurred, Node's EventEmitter emitted an unhandled `'error'` event (`node:events:487 throw er`), immediately terminating the process under nodemon.
+3. **Missing Process-Level Exception Traps:** Neither `unhandledRejection` nor `uncaughtException` were trapped, allowing any asynchronous rejection to crash the process.
+4. **Missing Graceful Termination (`SIGINT`/`SIGTERM`):** On Windows, killed nodemon processes left the TCP socket in `TIME_WAIT` without cleanly calling `server.close()`, causing subsequent spawns to immediately fail on port binding.
+5. **Missing Mongoose Runtime Error Handler:** `mongoose.connection.on('error')` was absent, exposing the runtime to unhandled database disconnection events.
+
+### 8.2 Architectural & Code Fixes Applied
+- **`server/server.js`:**
+  - Encapsulated startup in `startServer()` guarded by `if (require.main === module)`.
+  - Added `serverInstance.on('error')` handling `EADDRINUSE` with clear port conflict warnings instead of crashing.
+  - Added global `process.on('unhandledRejection')` and `process.on('uncaughtException')` handlers.
+  - Added graceful termination handlers for `SIGINT` and `SIGTERM` invoking `server.close()`.
+- **`server/config/db.js`:**
+  - Standardized warning log: `Warning: MONGO_URI is not set. Database connection skipped.`.
+  - Registered `mongoose.connection.on('error')` to prevent unhandled database crash events.
+  - Added `serverSelectionTimeoutMS: 5000` to prevent hanging connection attempts.
+- **`server/routes/healthRoutes.js`:**
+  - Wrapped handler in `try/catch` to ensure guaranteed HTTP responses.
+- **`server/nodemon.json`:**
+  - Added dedicated nodemon configuration with restricted watch scope (`server.js`, `routes`, `middleware`, `models`, `config`), 500ms debounce, and explicit ignores for `.git` and `node_modules`.
+
+### 8.3 Post-Fix Verification Evidence
+- **Nodemon Longevity Test:** Started via `npx nodemon server.js`. Verified process stayed running (`HasExited: False`, uptime 35s+).
+- **Health Check Response:** `GET http://localhost:5000/api/health` returned HTTP 200 with `{ "success": true, "database": "disconnected" }`.
+- **Frontend Axios Integration:** Axios request from frontend client returned `AXIOS_STATUS: 200`.
+
+---
+
+## 9. Final Phase 1 Verification Matrix
 
 Every check below was directly executed and verified with zero assumed results:
 
 | Check # | Verification Task | Execution Command / Method | Result | Notes / Evidence |
 |---|---|---|---|---|
-| **1** | Frontend production build | `npm --prefix client run build` | **PASS** | Vite v8.3.6 built production bundle in 1.11s. Generated `dist/index.html` (0.45 kB), `dist/assets/index-*.css` (17.03 kB), `dist/assets/index-*.js` (294.28 kB). |
-| **2** | Backend JS syntax & startup | `node --check server/...` + Node startup test | **PASS** | All 5 files passed syntax check. Server starts on port 5000; `GET /api/health` returns HTTP 200 with JSON payload. |
+| **1** | Frontend production build | `npm --prefix client run build` | **PASS** | Vite v8.3.6 built production bundle in 1.03s. Generated `dist/index.html` (0.45 kB), `dist/assets/index-*.css` (17.03 kB), `dist/assets/index-*.js` (294.28 kB). |
+| **2** | Backend JS syntax & startup | `node --check` + nodemon runtime test | **PASS** | Passed syntax checks. Hardened against `EADDRINUSE`, uncaught exceptions, and unhandled rejections. Nodemon stays running continuously on port 5000. |
 | **3** | Frontend API config & CORS | Axios service inspection & CORS preflight test | **PASS** | `api.js` has `withCredentials: true`; server returns `Access-Control-Allow-Origin: http://localhost:5173` and `Access-Control-Allow-Credentials: true`. |
 | **4** | `.gitignore` exclusions | `git check-ignore -v` on `.env`, `node_modules`, `dist` | **PASS** | Root `.gitignore` correctly ignores root and subfolder `.env`, `node_modules`, and `dist/`. |
 | **5** | `.env.example` placeholders | Content inspection of `client/.env.example` & `server/.env.example` | **PASS** | Both files contain placeholder strings (`<username>`, `<password>`, `your_jwt_secret_key_...`) and comments only; zero real secrets. |
@@ -199,9 +237,9 @@ Every check below was directly executed and verified with zero assumed results:
 
 ---
 
-## 9. Next Steps (Phase 2 Readiness)
+## 10. Next Steps (Phase 2 Readiness)
 
-Phase 1 foundation is complete and fully verified.
+Phase 1 foundation is complete, hardened, and fully verified.
 Upon user authorization, **Phase 2 (Backend Implementation)** will proceed with:
 1. `User` Mongoose model with email normalization and bcrypt hashing.
 2. `Task` Mongoose model with priority, status, and indexed `userId`.
