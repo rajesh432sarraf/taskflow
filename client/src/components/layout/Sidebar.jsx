@@ -4,7 +4,6 @@ import {
   LayoutDashboard, 
   CheckSquare, 
   CheckCircle2, 
-  Activity, 
   LogOut 
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -27,7 +26,6 @@ export default function Sidebar({ isOpen, onClose }) {
     { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { label: 'My Tasks', path: '/tasks', icon: CheckSquare },
     { label: 'Completed Tasks', path: '/tasks?status=Completed', icon: CheckCircle2 },
-    { label: 'System Health', path: '/health', icon: Activity },
   ];
 
   return (

@@ -12,7 +12,6 @@ const notFound = require('./middleware/notFound');
 const errorHandler = require('./middleware/errorHandler');
 
 // Route Handlers
-const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 
@@ -41,7 +40,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // API Routes
-app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 

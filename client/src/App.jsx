@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import TasksPage from './pages/TasksPage';
-import HealthPage from './pages/HealthPage';
 
 /**
  * TaskFlow Root Application Component.
@@ -28,7 +27,6 @@ export default function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/tasks" element={<TasksPage />} />
-              <Route path="/health" element={<HealthPage />} />
             </Route>
           </Route>
 
