@@ -70,10 +70,10 @@ export default function TaskCard({
     <div
       className={`group relative overflow-hidden bg-white rounded-2xl border p-4 sm:p-5 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between ${
         isCompleted
-          ? 'border-[#E2E8F0] bg-[#FAFCFB] opacity-85'
+          ? 'border-slate-200 bg-slate-50/40 opacity-80'
           : isOverdue
-          ? 'border-rose-300/80 bg-rose-50/15'
-          : 'border-[#E2E8F0] hover:border-[#27845B]/40'
+          ? 'border-rose-300 bg-rose-50/20'
+          : 'border-slate-200 hover:border-slate-300'
       }`}
     >
       {/* Left Priority Accent Stripe */}
@@ -93,12 +93,12 @@ export default function TaskCard({
               disabled={isToggling}
               onClick={() => onStatusToggle && onStatusToggle(task)}
               aria-label={isCompleted ? 'Mark as incomplete' : 'Mark as completed'}
-              className="mt-0.5 text-slate-400 hover:text-[#27845B] transition-transform active:scale-90 focus:outline-hidden cursor-pointer shrink-0 disabled:opacity-50"
+              className="mt-0.5 text-slate-400 hover:text-[#059669] transition-transform active:scale-90 focus:outline-hidden cursor-pointer shrink-0 disabled:opacity-50"
             >
               {isCompleted ? (
-                <CheckCircle2 className="w-5 h-5 text-[#27845B]" />
+                <CheckCircle2 className="w-5 h-5 text-[#059669]" />
               ) : (
-                <Circle className="w-5 h-5 hover:text-[#27845B]" />
+                <Circle className="w-5 h-5 hover:text-[#059669]" />
               )}
             </button>
 

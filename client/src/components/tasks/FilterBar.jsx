@@ -18,13 +18,13 @@ export default function FilterBar({
   return (
     <div className="flex flex-wrap items-center gap-3">
       {/* Status Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
-        <Filter className="w-3.5 h-3.5 text-[#367D8A]" />
+      <div className="flex items-center gap-1.5 text-xs text-slate-500">
+        <Filter className="w-3.5 h-3.5 text-[#059669]" />
         <span className="font-medium hidden sm:inline">Status:</span>
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#367D8A] cursor-pointer hover:border-[#367D8A]/40 transition-colors"
+          className="rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-800 px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#059669] cursor-pointer hover:border-slate-300 transition-colors"
         >
           {statusOptions.map((opt) => (
             <option key={opt} value={opt}>
@@ -35,12 +35,12 @@ export default function FilterBar({
       </div>
 
       {/* Priority Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
+      <div className="flex items-center gap-1.5 text-xs text-slate-500">
         <span className="font-medium hidden sm:inline">Priority:</span>
         <select
           value={priority}
           onChange={(e) => onPriorityChange(e.target.value)}
-          className="rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#367D8A] cursor-pointer hover:border-[#367D8A]/40 transition-colors"
+          className="rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-800 px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#059669] cursor-pointer hover:border-slate-300 transition-colors"
         >
           {priorityOptions.map((opt) => (
             <option key={opt} value={opt}>

@@ -143,32 +143,27 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Luxury Dark Forest Emerald & Niche Teal Hero Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#010001] via-[#133336] to-[#285F6B] text-white p-6 sm:p-8 shadow-2xl border border-[#367D8A]/30">
-        {/* Subtle Concentric Orbital Background Guides */}
-        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border border-[#367D8A]/15 pointer-events-none" />
-        <div className="absolute -right-32 -top-32 w-[420px] h-[420px] rounded-full border border-[#367D8A]/10 pointer-events-none" />
-        <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-64 h-64 bg-[#367D8A]/15 rounded-full blur-3xl pointer-events-none" />
-
+      {/* Modern Precision Hero Card */}
+      <div className="relative overflow-hidden rounded-2xl bg-white p-6 sm:p-7 shadow-xs border border-slate-200/80 bg-gradient-to-br from-white via-white to-emerald-50/30">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3 max-w-xl">
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-[#FFFFFF]">
-              <span className="w-2 h-2 rounded-full bg-[#367D8A] shadow-[0_0_8px_#367D8A]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-xs font-semibold text-emerald-800">
+              <span className="w-2 h-2 rounded-full bg-[#059669]" />
               <span>Daily Productivity Momentum</span>
-              <span className="text-white/40">•</span>
-              <span className="text-[#367D8A] font-bold">
+              <span className="text-emerald-300">•</span>
+              <span className="text-emerald-700 font-bold">
                 {stats.overdueTasks > 0 ? `${stats.overdueTasks} Overdue` : 'All Clear'}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-              Welcome back, <span className="text-[#367D8A]">{user?.name || 'User'}</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              Welcome back, <span className="text-[#059669]">{user?.name || 'User'}</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal">
-              You have <span className="font-semibold text-white">{stats.pendingTasks} tasks</span> awaiting action and{' '}
-              <span className="font-semibold text-white">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
+              You have <span className="font-semibold text-slate-900">{stats.pendingTasks} tasks</span> awaiting action and{' '}
+              <span className="font-semibold text-slate-900">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
             </p>
 
             <div className="pt-1">
@@ -178,7 +173,7 @@ export default function DashboardPage() {
                   setEditingTask(null);
                   setIsTaskModalOpen(true);
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#367D8A] hover:bg-[#285F6B] text-white text-xs font-bold transition-all shadow-[0_0_20px_rgba(54,125,138,0.4)] hover:shadow-[0_0_25px_rgba(54,125,138,0.6)] hover:scale-102 active:scale-98 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#059669] hover:bg-[#047857] text-white text-xs font-bold transition-all shadow-xs hover:shadow-sm hover:shadow-emerald-600/25 active:scale-98 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create New Task</span>
@@ -187,15 +182,15 @@ export default function DashboardPage() {
           </div>
 
           {/* Right: Circular Radial Progress Dial */}
-          <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 shrink-0 self-start md:self-auto">
-            <div className="relative w-24 h-24 flex items-center justify-center">
-              <svg className="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
+          <div className="flex items-center gap-4 bg-slate-50/80 rounded-2xl p-4 sm:p-5 border border-slate-200/60 shrink-0 self-start md:self-auto">
+            <div className="relative w-20 h-20 flex items-center justify-center">
+              <svg className="w-20 h-20 -rotate-90" viewBox="0 0 100 100">
                 {/* Background Ring */}
                 <circle
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#133336"
+                  stroke="#E2E8F0"
                   strokeWidth="8"
                   fill="none"
                 />
@@ -204,7 +199,7 @@ export default function DashboardPage() {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#367D8A"
+                  stroke="#059669"
                   strokeWidth="8"
                   strokeDasharray={251.2}
                   strokeDashoffset={251.2 - (251.2 * completionRate) / 100}
@@ -215,21 +210,21 @@ export default function DashboardPage() {
               </svg>
 
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="text-xl font-extrabold text-white tracking-tight leading-none">
+                <span className="text-lg font-extrabold text-slate-900 tracking-tight leading-none">
                   {completionRate}%
                 </span>
-                <span className="text-[10px] text-[#367D8A] uppercase tracking-wider font-semibold mt-0.5">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mt-0.5">
                   Done
                 </span>
               </div>
             </div>
 
             <div className="space-y-1 text-xs">
-              <div className="text-slate-200 font-semibold">Completion Goal</div>
-              <div className="text-white text-sm font-bold">
+              <div className="text-slate-500 font-medium">Completion Goal</div>
+              <div className="text-slate-900 text-sm font-bold">
                 {stats.completedTasks} of {stats.totalTasks} Done
               </div>
-              <div className="text-[11px] text-white/60">
+              <div className="text-[11px] text-slate-400">
                 {stats.totalTasks === 0
                   ? 'Start by adding a task'
                   : completionRate === 100
@@ -299,7 +294,7 @@ export default function DashboardPage() {
             </div>
             <Link
               to="/tasks"
-              className="text-xs font-bold text-[#367D8A] hover:text-[#285F6B] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-[#367D8A]/10"
+              className="text-xs font-bold text-[#059669] hover:text-[#047857] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-50"
             >
               View all tasks
               <ArrowRight className="w-3.5 h-3.5" />
@@ -338,12 +333,12 @@ export default function DashboardPage() {
         {/* Right Column: Status & Priority Breakdown */}
         <div className="space-y-6">
           {/* Progress Overview Card */}
-          <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold text-[#0F172A]">
+              <h3 className="text-sm font-bold text-slate-900">
                 Productivity Progress
               </h3>
-              <div className="w-7 h-7 rounded-lg bg-[#367D8A]/10 flex items-center justify-center text-[#367D8A]">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-[#059669]">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -351,12 +346,12 @@ export default function DashboardPage() {
             <div className="space-y-3">
               <div>
                 <div className="flex justify-between text-xs mb-1.5 font-semibold">
-                  <span className="text-[#64748B]">Velocity Rate</span>
-                  <span className="text-[#0F172A]">{completionRate}%</span>
+                  <span className="text-slate-500">Velocity Rate</span>
+                  <span className="text-slate-900">{completionRate}%</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#285F6B] to-[#367D8A] h-2.5 rounded-full transition-all duration-700 shadow-[0_0_10px_#367D8A]"
+                    className="bg-[#059669] h-2.5 rounded-full transition-all duration-500"
                     style={{ width: `${completionRate}%` }}
                   />
                 </div>

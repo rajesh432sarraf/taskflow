@@ -1,8 +1,8 @@
 import React from 'react';
 
 /**
- * Premium Metric Card Component for TaskFlow Dashboard.
- * Displays count, illuminated icon container, top ambient accent glow, and status metadata.
+ * Modern Precision StatCard for TaskFlow Dashboard.
+ * Clean, balanced, and modern SaaS styling.
  */
 export default function StatCard({
   title,
@@ -15,34 +15,29 @@ export default function StatCard({
 }) {
   const variantStyles = {
     default: {
-      border: 'hover:border-[#367D8A]/50',
-      accentGlow: 'bg-[#367D8A]',
-      iconBg: 'bg-[#367D8A]/10 text-[#367D8A] border-[#367D8A]/30',
-      badge: 'bg-[#367D8A]/15 text-[#285F6B]',
+      iconBg: 'bg-emerald-50 text-[#059669] border-emerald-100',
+      dot: 'bg-[#059669]',
+      badge: 'bg-emerald-50 text-[#059669]',
     },
     warning: {
-      border: 'hover:border-amber-400/50',
-      accentGlow: 'bg-amber-500',
-      iconBg: 'bg-amber-500/10 text-amber-700 border-amber-300/40',
+      iconBg: 'bg-amber-50 text-amber-700 border-amber-100',
+      dot: 'bg-amber-500',
       badge: 'bg-amber-50 text-amber-700',
     },
     info: {
-      border: 'hover:border-sky-400/50',
-      accentGlow: 'bg-sky-500',
-      iconBg: 'bg-sky-500/10 text-sky-700 border-sky-300/40',
+      iconBg: 'bg-sky-50 text-sky-700 border-sky-100',
+      dot: 'bg-sky-500',
       badge: 'bg-sky-50 text-sky-700',
     },
     success: {
-      border: 'hover:border-emerald-400/50',
-      accentGlow: 'bg-emerald-500',
-      iconBg: 'bg-emerald-500/10 text-emerald-700 border-emerald-300/40',
+      iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+      dot: 'bg-emerald-500',
       badge: 'bg-emerald-50 text-emerald-700',
     },
     danger: {
-      border: 'hover:border-red-400/50',
-      accentGlow: 'bg-red-500',
-      iconBg: 'bg-red-500/10 text-red-700 border-red-300/40',
-      badge: 'bg-red-50 text-red-700',
+      iconBg: 'bg-rose-50 text-rose-700 border-rose-100',
+      dot: 'bg-rose-500',
+      badge: 'bg-rose-50 text-rose-700',
     },
   };
 
@@ -50,20 +45,15 @@ export default function StatCard({
 
   return (
     <div
-      className={`group relative overflow-hidden bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-all duration-300 ${style.border}`}
+      className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-sm hover:border-slate-300 transition-all duration-200 flex flex-col justify-between"
     >
-      {/* Top Ambient Glow Edge */}
-      <div
-        className={`absolute top-0 left-0 right-0 h-1 opacity-80 group-hover:h-1.5 transition-all duration-300 ${style.accentGlow}`}
-      />
-
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
           {title}
         </span>
         {Icon && (
           <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center border shadow-2xs group-hover:scale-105 transition-transform duration-200 ${style.iconBg}`}
+            className={`w-9 h-9 rounded-xl flex items-center justify-center border shadow-2xs ${style.iconBg}`}
           >
             <Icon className="w-4.5 h-4.5" />
           </div>
@@ -72,9 +62,9 @@ export default function StatCard({
 
       <div className="mt-3 flex items-baseline gap-2">
         {isLoading ? (
-          <div className="h-8 w-16 bg-[#F1F3F5] animate-pulse rounded-lg" />
+          <div className="h-8 w-16 bg-slate-100 animate-pulse rounded-lg" />
         ) : (
-          <span className="text-3xl font-extrabold tracking-tight text-[#0F172A]">
+          <span className="text-3xl font-extrabold tracking-tight text-slate-900">
             {value ?? 0}
           </span>
         )}
@@ -87,8 +77,8 @@ export default function StatCard({
       </div>
 
       {subtext && (
-        <p className="mt-2 text-xs text-[#64748B] font-medium flex items-center gap-1.5">
-          <span className={`w-1.5 h-1.5 rounded-full ${style.accentGlow}`} />
+        <p className="mt-2 text-xs text-slate-500 font-medium flex items-center gap-1.5">
+          <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
           {subtext}
         </p>
       )}

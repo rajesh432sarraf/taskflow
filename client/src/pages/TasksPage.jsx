@@ -141,7 +141,7 @@ export default function TasksPage() {
               My Tasks
             </h1>
             {!isLoading && (
-              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#367D8A]/10 text-[#285F6B] border border-[#367D8A]/25">
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#059669] border border-emerald-200/80">
                 {tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}
               </span>
             )}
