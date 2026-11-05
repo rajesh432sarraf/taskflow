@@ -28,3 +28,4 @@ try {
 }
 
 export { auth, googleProvider, signInWithPopup };
+
