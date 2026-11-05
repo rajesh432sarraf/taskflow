@@ -387,3 +387,4 @@ async function runE2EIntegrationTests() {
 }
 
 runE2EIntegrationTests();
+
