@@ -25,10 +25,12 @@ export function AuthProvider({ children }) {
         const userData = data.data.user || data.data;
         setUser(userData);
       } else {
+        try { localStorage.removeItem('taskflow_token'); } catch {}
         setUser(null);
       }
     } catch {
       // 401 unauthenticated is normal on first visit or expired session
+      try { localStorage.removeItem('taskflow_token'); } catch {}
       setUser(null);
     } finally {
       setLoading(false);
@@ -47,6 +49,9 @@ export function AuthProvider({ children }) {
       setError(null);
       const data = await authService.login({ email, password });
       if (data && data.success && data.data) {
+        if (data.token) {
+          try { localStorage.setItem('taskflow_token', data.token); } catch {}
+        }
         const userData = data.data.user || data.data;
         setUser(userData);
         return { success: true, user: userData };
@@ -67,6 +72,9 @@ export function AuthProvider({ children }) {
       setError(null);
       const data = await authService.register({ name, email, password });
       if (data && data.success && data.data) {
+        if (data.token) {
+          try { localStorage.setItem('taskflow_token', data.token); } catch {}
+        }
         const userData = data.data.user || data.data;
         setUser(userData);
         return { success: true, user: userData };
@@ -100,6 +108,9 @@ export function AuthProvider({ children }) {
 
       const data = await authService.googleLogin(payload);
       if (data && data.success && data.data) {
+        if (data.token) {
+          try { localStorage.setItem('taskflow_token', data.token); } catch {}
+        }
         const userData = data.data.user || data.data;
         setUser(userData);
         return { success: true, user: userData };
@@ -108,6 +119,12 @@ export function AuthProvider({ children }) {
     } catch (err) {
       if (err.code === 'auth/popup-closed-by-user') {
         return { success: false, cancelled: true };
+      }
+      if (err.code === 'auth/unauthorized-domain') {
+        const currentHost = typeof window !== 'undefined' ? window.location.hostname : 'your deployment domain';
+        const message = `Domain unauthorized: Please add "${currentHost}" to Firebase Console -> Authentication -> Settings -> Authorized Domains.`;
+        setError(message);
+        return { success: false, error: message };
       }
       const message = err.response?.data?.message || err.message || 'Google sign-in failed';
       setError(message);
@@ -124,6 +141,7 @@ export function AuthProvider({ children }) {
     } catch {
       // Ignore network errors on logout
     } finally {
+      try { localStorage.removeItem('taskflow_token'); } catch {}
       setUser(null);
       setError(null);
     }

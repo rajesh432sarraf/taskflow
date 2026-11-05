@@ -17,16 +17,54 @@ const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
 
-// CORS configuration - supports explicit client URL, localhost, and 127.0.0.1 with credentials
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-].filter(Boolean);
+// Trust reverse proxy (Render, Vercel, Heroku, AWS) for secure HTTPS cookies and protocol detection
+app.set('trust proxy', 1);
+
+// Flexible CORS origin validation supporting configured URLs, localhost, and Vercel deployments
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Allow non-browser, mobile, or same-origin requests
+
+  const cleanOrigin = origin.trim().replace(/\/+$/, '');
+
+  // 1. Explicitly configured client URLs
+  const configured = [
+    process.env.CLIENT_URL,
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'https://taskflow-one-lilac.vercel.app',
+    'https://taskflow-three.vercel.app',
+  ];
+
+  if (process.env.CLIENT_URL && process.env.CLIENT_URL.includes(',')) {
+    process.env.CLIENT_URL.split(',').forEach((u) => configured.push(u.trim()));
+  }
+
+  const normalizedConfigured = configured
+    .filter(Boolean)
+    .map((u) => u.trim().replace(/\/+$/, ''));
+
+  if (normalizedConfigured.includes(cleanOrigin)) {
+    return true;
+  }
+
+  // 2. Allow any localhost / loopback on any port
+  if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(cleanOrigin)) {
+    return true;
+  }
+
+  // 3. Allow any Vercel deployment domain (*.vercel.app)
+  if (/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.vercel\.app$/.test(cleanOrigin)) {
+    return true;
+  }
+
+  return false;
+};
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (isOriginAllowed(origin)) {
       return callback(null, true);
     }
     return callback(new Error(`CORS policy: Origin ${origin} not allowed`));
