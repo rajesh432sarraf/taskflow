@@ -1,52 +1,280 @@
-import React from 'react';
-import { CheckSquare, ShieldCheck, ArrowRight, Clock } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Plus, ListFilter } from 'lucide-react';
+import taskService from '../services/taskService';
+import TaskCard from '../components/tasks/TaskCard';
+import TaskForm from '../components/tasks/TaskForm';
+import SearchBar from '../components/tasks/SearchBar';
+import FilterBar from '../components/tasks/FilterBar';
+import Modal from '../components/common/Modal';
 import Button from '../components/common/Button';
+import Loader from '../components/common/Loader';
+import ErrorMessage from '../components/common/ErrorMessage';
+import EmptyState from '../components/common/EmptyState';
 
 /**
- * Tasks Page placeholder shell demonstrating Phase 2 readiness.
+ * TasksPage Component.
+ * Complete task management interface with search, status/priority filtering, creation, and editing.
  */
 export default function TasksPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Search & Filter state synced with query params
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState(searchParams.get('status') || 'All');
+  const [priorityFilter, setPriorityFilter] = useState('All');
+
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Modals
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Delete Confirmation
+  const [deletingTask, setDeletingTask] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Sync state if URL query param changes
+  useEffect(() => {
+    const urlStatus = searchParams.get('status');
+    if (urlStatus && ['Pending', 'In Progress', 'Completed'].includes(urlStatus)) {
+      setStatusFilter(urlStatus);
+    }
+  }, [searchParams]);
+
+  // Fetch tasks
+  const loadTasks = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const params = {};
+      if (searchTerm.trim()) params.search = searchTerm.trim();
+      if (statusFilter !== 'All') params.status = statusFilter;
+      if (priorityFilter !== 'All') params.priority = priorityFilter;
+
+      const res = await taskService.getTasks(params);
+      if (res.success) {
+        setTasks(res.data);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || err.message || 'Failed to load tasks');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [searchTerm, statusFilter, priorityFilter]);
+
+  // Debounced/instant query effect
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      loadTasks();
+    }, 250);
+
+    return () => clearTimeout(handler);
+  }, [loadTasks]);
+
+  // Handle Create or Edit Submit
+  const handleFormSubmit = async (taskData) => {
+    setIsSubmitting(true);
+    try {
+      if (editingTask) {
+        await taskService.updateTask(editingTask._id, taskData);
+      } else {
+        await taskService.createTask(taskData);
+      }
+      setIsTaskModalOpen(false);
+      setEditingTask(null);
+      await loadTasks();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Handle Quick Status Toggle
+  const handleStatusToggle = async (task) => {
+    const newStatus = task.status === 'Completed' ? 'Pending' : 'Completed';
+    try {
+      await taskService.updateTask(task._id, { status: newStatus });
+      await loadTasks();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update task status');
+    }
+  };
+
+  // Handle Delete Confirmation
+  const confirmDelete = async () => {
+    if (!deletingTask) return;
+    setIsDeleting(true);
+    try {
+      await taskService.deleteTask(deletingTask._id);
+      setDeletingTask(null);
+      await loadTasks();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to delete task');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('All');
+    setPriorityFilter('All');
+    setSearchParams({});
+  };
+
+  const hasActiveFilters = searchTerm !== '' || statusFilter !== 'All' || priorityFilter !== 'All';
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Top Action Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#202938]">
-            Tasks Workspace
+          <h1 className="text-2xl font-bold tracking-tight text-[#202938]">
+            My Tasks
           </h1>
-          <p className="text-sm text-[#667085] mt-1">
-            Personal Task Management • Phase 2 Milestone
+          <p className="mt-1 text-xs text-[#667085]">
+            Manage, organize, and prioritize your daily responsibilities.
           </p>
         </div>
 
         <Button
           variant="primary"
-          icon={CheckSquare}
-          disabled={true}
-          title="Task creation unlocks in Phase 2"
+          size="md"
+          icon={Plus}
+          onClick={() => {
+            setEditingTask(null);
+            setIsTaskModalOpen(true);
+          }}
         >
-          + Add Task (Phase 2)
+          Add Task
         </Button>
       </div>
 
-      {/* Clean Empty State Card */}
-      <div className="bg-white rounded-2xl border border-[#E5E7EB] p-12 text-center shadow-xs flex flex-col items-center justify-center max-w-2xl mx-auto my-8">
-        <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#27845B] flex items-center justify-center mb-4">
-          <Clock className="w-7 h-7" />
-        </div>
-        <h2 className="text-lg font-bold text-[#202938]">
-          Task CRUD Scheduled for Phase 2
-        </h2>
-        <p className="text-sm text-[#667085] mt-2 max-w-md leading-relaxed">
-          The Phase 1 foundation, layout architecture, and component libraries are verified.
-          Task creation, status toggling, search, and priority filters will be implemented in Phase 2.
-        </p>
+      {error && (
+        <ErrorMessage
+          title="Tasks Error"
+          message={error}
+          onRetry={loadTasks}
+        />
+      )}
 
-        <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[#27845B] bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Strict Phase Boundary Maintained</span>
-        </div>
+      {/* Filter and Search Bar */}
+      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <SearchBar
+          value={searchTerm}
+          onChange={setSearchTerm}
+          className="w-full md:max-w-md"
+        />
+
+        <FilterBar
+          status={statusFilter}
+          onStatusChange={(val) => {
+            setStatusFilter(val);
+            if (val === 'All') {
+              searchParams.delete('status');
+            } else {
+              searchParams.set('status', val);
+            }
+            setSearchParams(searchParams);
+          }}
+          priority={priorityFilter}
+          onPriorityChange={setPriorityFilter}
+          onReset={handleResetFilters}
+          hasActiveFilters={hasActiveFilters}
+        />
       </div>
+
+      {/* Task List / Grid Area */}
+      {isLoading ? (
+        <div className="py-20 flex justify-center">
+          <Loader size="lg" text="Loading tasks..." />
+        </div>
+      ) : tasks.length === 0 ? (
+        <EmptyState
+          icon={ListFilter}
+          title={hasActiveFilters ? 'No matching tasks' : 'No tasks created yet'}
+          description={
+            hasActiveFilters
+              ? 'No tasks match your active search and filter criteria. Try adjusting your filters.'
+              : 'Keep your productivity on track by creating your first task.'
+          }
+          actionLabel={hasActiveFilters ? 'Reset Filters' : 'Create Task'}
+          actionIcon={hasActiveFilters ? undefined : Plus}
+          onAction={hasActiveFilters ? handleResetFilters : () => setIsTaskModalOpen(true)}
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {tasks.map((task) => (
+            <TaskCard
+              key={task._id}
+              task={task}
+              onStatusToggle={handleStatusToggle}
+              onEdit={(t) => {
+                setEditingTask(t);
+                setIsTaskModalOpen(true);
+              }}
+              onDelete={(t) => setDeletingTask(t)}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Task Form Modal (Add / Edit) */}
+      <Modal
+        isOpen={isTaskModalOpen}
+        onClose={() => {
+          setIsTaskModalOpen(false);
+          setEditingTask(null);
+        }}
+        title={editingTask ? 'Edit Task' : 'Create New Task'}
+        description={
+          editingTask
+            ? 'Make changes to your existing task below.'
+            : 'Fill in the information to add a task.'
+        }
+      >
+        <TaskForm
+          initialData={editingTask}
+          onSubmit={handleFormSubmit}
+          onCancel={() => {
+            setIsTaskModalOpen(false);
+            setEditingTask(null);
+          }}
+          isSubmitting={isSubmitting}
+        />
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={!!deletingTask}
+        onClose={() => setDeletingTask(null)}
+        title="Delete Task"
+        description="Are you sure you want to permanently delete this task? This action cannot be undone."
+        maxWidth="max-w-md"
+      >
+        <div className="mt-4 flex items-center justify-end gap-3">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setDeletingTask(null)}
+            disabled={isDeleting}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            variant="danger"
+            onClick={confirmDelete}
+            isLoading={isDeleting}
+          >
+            Delete Task
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }
-

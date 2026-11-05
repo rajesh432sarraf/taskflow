@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Server, RefreshCw, Terminal, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Server, RefreshCw, Terminal } from 'lucide-react';
 import api from '../services/api';
 import Button from '../components/common/Button';
 import Loader from '../components/common/Loader';

@@ -68,23 +68,23 @@ Do not mark tasks complete until verified in the actual workspace.
 
 ## Phase 3 — Frontend
 
-- [ ] Configure React Router.
-- [ ] Create global design tokens and layout.
-- [ ] Build login page.
-- [ ] Build registration page.
-- [ ] Build authentication context and protected routes.
-- [ ] Build dashboard and statistics cards.
-- [ ] Build task list.
-- [ ] Build task card.
-- [ ] Build create/edit task form.
-- [ ] Add search.
-- [ ] Add status and priority filters.
-- [ ] Add delete confirmation.
-- [ ] Add loading, empty, success and error states.
-- [ ] Add responsive behavior.
-- [ ] Verify refresh/session behavior.
+- [x] Configure React Router (`App.jsx` with `/login`, `/register`, `/dashboard`, `/tasks`, `/health`).
+- [x] Create global design tokens and layout (`index.css` tokens, `Navbar.jsx`, `Sidebar.jsx`, `AppLayout.jsx`).
+- [x] Build login page (`LoginPage.jsx`: email/password validation, show/hide password, auth redirect).
+- [x] Build registration page (`RegisterPage.jsx`: full name, email, password, confirm password, validation).
+- [x] Build authentication context and protected routes (`AuthContext.jsx`, `ProtectedRoute.jsx`, `authService.js`).
+- [x] Build dashboard and statistics cards (`DashboardPage.jsx`, `StatCard.jsx`, 4 metric cards, completion rate, overdue alerts).
+- [x] Build task list (`TasksPage.jsx`, responsive grid with instant filtering).
+- [x] Build task card (`TaskCard.jsx`: priority badges, status pills, overdue indicator, quick status toggle, edit, delete).
+- [x] Build create/edit task form (`TaskForm.jsx`, modal wrapper, field validation, character counts).
+- [x] Add search (`SearchBar.jsx`, instant search with clear button).
+- [x] Add status and priority filters (`FilterBar.jsx`, URL query param syncing).
+- [x] Add delete confirmation (`Modal.jsx` confirmation dialog with loading state).
+- [x] Add loading, empty, success and error states (`Loader.jsx`, `EmptyState.jsx`, `ErrorMessage.jsx`).
+- [x] Add responsive behavior (Mobile drawer with backdrop, responsive grid, fixed desktop sidebar).
+- [x] Verify refresh/session behavior (Automatic cookie session rehydration via `GET /api/auth/me`).
 
-**Exit criteria:** User can complete all core flows through the UI.
+**Exit criteria:** User can complete all core flows through the UI. (Phase 3 complete: All pages, components, services, and routes built and verified; `vite build` succeeded in 538ms).
 
 ## Phase 4 — Integration and quality
 

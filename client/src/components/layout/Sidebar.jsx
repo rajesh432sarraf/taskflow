@@ -1,22 +1,33 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   CheckSquare, 
-  Server, 
-  ShieldCheck, 
-  Info,
-  ExternalLink 
+  CheckCircle2, 
+  Activity, 
+  LogOut 
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * Responsive Sidebar navigation for TaskFlow.
+ * Includes links for Dashboard, My Tasks, Completed Tasks, and Logout action.
  */
 export default function Sidebar({ isOpen, onClose }) {
+  const { logout, user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   const navItems = [
-    { label: 'Dashboard', path: '/', icon: LayoutDashboard },
-    { label: 'Tasks (Phase 2)', path: '/tasks', icon: CheckSquare, badge: 'Soon' },
-    { label: 'System Health', path: '/health', icon: Server },
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'My Tasks', path: '/tasks', icon: CheckSquare },
+    { label: 'Completed Tasks', path: '/tasks?status=Completed', icon: CheckCircle2 },
+    { label: 'System Health', path: '/health', icon: Activity },
   ];
 
   return (
@@ -24,8 +35,9 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-40 md:hidden backdrop-blur-xs transition-opacity"
+          className="fixed inset-0 bg-black/30 z-40 md:hidden backdrop-blur-xs transition-opacity"
           onClick={onClose}
+          aria-hidden="true"
         />
       )}
 
@@ -44,6 +56,11 @@ export default function Sidebar({ isOpen, onClose }) {
             <nav className="space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
+                const isItemActive =
+                  item.path.includes('?')
+                    ? location.pathname + location.search === item.path
+                    : location.pathname === item.path && !location.search;
+
                 return (
                   <NavLink
                     key={item.label}
@@ -51,54 +68,46 @@ export default function Sidebar({ isOpen, onClose }) {
                     onClick={() => {
                       if (window.innerWidth < 768) onClose();
                     }}
-                    className={({ isActive }) =>
-                      `flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        isActive
-                          ? 'bg-[#27845B]/10 text-[#27845B]'
-                          : 'text-[#667085] hover:text-[#202938] hover:bg-[#F7F8FA]'
-                      }`
-                    }
+                    className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      isItemActive
+                        ? 'bg-[#27845B]/10 text-[#27845B]'
+                        : 'text-[#667085] hover:text-[#202938] hover:bg-[#F7F8FA]'
+                    }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon className="w-4 h-4" />
                       <span>{item.label}</span>
                     </div>
-                    {item.badge && (
-                      <span className="text-[10px] font-semibold bg-[#F1F3F5] text-[#667085] px-1.5 py-0.5 rounded">
-                        {item.badge}
-                      </span>
-                    )}
                   </NavLink>
                 );
               })}
             </nav>
           </div>
-
-          {/* Architecture Status Badge */}
-          <div className="p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#202938] mb-1">
-              <ShieldCheck className="w-4 h-4 text-[#27845B]" />
-              <span>Phase 1 Verified</span>
-            </div>
-            <p className="text-[11px] text-[#667085] leading-relaxed">
-              Express REST API on port 5000, Vite React frontend on 5173, and Mongoose connection layer ready.
-            </p>
-          </div>
         </div>
 
-        {/* Bottom Sidebar Info */}
-        <div className="p-4 border-t border-[#E5E7EB] text-xs text-[#667085] space-y-1">
-          <div className="flex items-center justify-between">
-            <span>Team</span>
-            <span className="font-semibold text-[#202938]">Golden Eagles</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Stack</span>
-            <span className="font-mono text-[11px] text-[#202938]">MERN</span>
-          </div>
+        {/* Bottom Sidebar Info & Logout */}
+        <div className="p-4 border-t border-[#E5E7EB] space-y-3">
+          {user && (
+            <div className="px-2 py-1 flex items-center justify-between text-xs text-[#667085]">
+              <span className="truncate max-w-[140px] font-medium text-[#202938]">
+                {user.name}
+              </span>
+              <span className="text-[10px] bg-[#27845B]/10 text-[#27845B] px-1.5 py-0.5 rounded font-semibold">
+                Online
+              </span>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-[#D64545] hover:bg-red-50 transition-colors cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Logout</span>
+          </button>
         </div>
       </aside>
     </>
   );
 }
-

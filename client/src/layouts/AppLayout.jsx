@@ -8,7 +8,7 @@ import Footer from '../components/layout/Footer';
  * Reusable AppLayout shell for TaskFlow.
  * Provides fixed top navbar, responsive collapsible sidebar, and scrollable content area.
  */
-export default function AppLayout({ onPingApi, isCheckingApi }) {
+export default function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -17,8 +17,6 @@ export default function AppLayout({ onPingApi, isCheckingApi }) {
       <Navbar
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isSidebarOpen={isSidebarOpen}
-        onPingApi={onPingApi}
-        isCheckingApi={isCheckingApi}
       />
 
       <div className="flex flex-1">
@@ -39,4 +37,3 @@ export default function AppLayout({ onPingApi, isCheckingApi }) {
     </div>
   );
 }
-
