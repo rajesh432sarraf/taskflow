@@ -76,15 +76,16 @@ At the start of each session:
 ## 8. Current status
 
 - Phase 0: Completed and approved.
-- Phase 1: Completed and final verification executed on 2026-11-05.
+- Phase 1: Completed, hardened, and verified with live MongoDB Atlas connection on 2026-11-05.
   - Workspace: `D:\TASKFLOW`
-  - Git Monorepo: Initialized at root (`D:\TASKFLOW`); client and server unified in same repository.
-  - Backend: Express 4 REST API running on port 5000; syntax checks passed (`node --check`); `/api/health` tested and responding with HTTP 200.
-  - Frontend: React 19 + Vite 8 + Tailwind CSS 4 scaffolded; production build verified (`vite build` succeeded in 1.11s).
+  - Git Monorepo: Initialized at root (`D:\TASKFLOW`); client and server unified in same repository; hardened `.gitignore`.
+  - Backend: Express 4 REST API running on port 5000; syntax checks passed; `/api/health` tested and responding with HTTP 200.
+  - Database: MongoDB Atlas cluster `rajesh.hzsemnx.mongodb.net` successfully connected via Mongoose; `/api/health` reports `database: "connected"`.
+  - Frontend: React 19 + Vite 8 + Tailwind CSS 4; production build verified (`vite build` succeeded in 550ms).
+  - Frontend Architecture: Modular layout with `Navbar`, `Sidebar`, `Footer`, `AppLayout`, common components (`Button`, `Input`, `Loader`, `ErrorMessage`), and pages (`DashboardPage`, `TasksPage`, `HealthPage`) using `react-router-dom`.
   - CORS & API: Axios preconfigured with `withCredentials: true`; backend CORS allows explicit origin `http://localhost:5173` with credentials.
-  - Git Security: Verified `.gitignore` excludes all `.env` files, `node_modules`, and `dist/`. Both `.env.example` files contain only safe placeholders.
+  - Git Security: Verified `.gitignore` excludes all `.env` files, `node_modules`, and `dist/`. No secrets tracked.
   - Scope Discipline: Verified zero Phase 2 code (models, auth routes, task CRUD) implemented prematurely.
-  - Database: MongoDB Atlas is NOT connected yet (safe fallback: `db.js` handles missing URI gracefully; health reports `database: "disconnected"`).
   - Primary Auth Strategy: Single primary approach locked in: HTTP-only Cookie JWT (`sameSite: 'lax'` in dev; `none` in prod with `secure: true`).
   - Next milestone: Phase 2 (Backend Models, Auth, Task CRUD, Search/Filter & Stats).
 
@@ -92,7 +93,6 @@ At the start of each session:
 
 - Actual names and registration numbers of the three members of team Golden Eagles.
 - Final GitHub repository remote URL.
-- MongoDB Atlas connection string (`MONGO_URI`) for database persistence in Phase 2.
 - Actual deployment URLs on Vercel and Render (once provisioned).
 
 Do not invent these values. Ask the team when they become necessary.

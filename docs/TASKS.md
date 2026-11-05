@@ -36,14 +36,14 @@ Do not mark tasks complete until verified in the actual workspace.
 - [x] Add root and client `.gitignore`.
 - [x] Add frontend and backend `.env.example`.
 - [x] Configure local environment variables without committing secrets.
-- [!] Connect MongoDB Atlas (Mongoose connection configured in `config/db.js`; awaiting user URI in `.env`).
+- [x] Connect MongoDB Atlas (Connected and verified: "MongoDB Connected Successfully!", health reports database: "connected").
 - [x] Implement `/api/health` with database status and uptime reporting.
-- [x] Verify frontend builds and runs (`vite build` succeeded in 1.10s).
+- [x] Verify frontend builds and runs (`vite build` succeeded in 550ms).
 - [x] Verify backend starts locally (Express listening on port 5000, `/api/health` 200 OK).
 - [x] Verify frontend-to-backend communication (Axios with `withCredentials: true` tested).
 - [x] Commit foundation to Git.
 
-**Exit criteria:** React page builds, API health endpoint responds with HTTP 200, database connection helper handles missing URI gracefully, zero secrets or `node_modules` committed. (Phase 1 complete and fully verified on 2026-11-05: 7/7 operational checks PASS; MongoDB Atlas connection pending user URI).
+**Exit criteria:** React page builds, API health endpoint responds with HTTP 200, database connection succeeds ("MongoDB Connected Successfully!"), zero secrets or `node_modules` committed. (Phase 1 complete and fully verified with live MongoDB Atlas connection).
 
 ## Phase 2 — Backend
 
