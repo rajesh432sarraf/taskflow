@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { Layers, Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
@@ -83,8 +83,12 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#F7F8FA] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#27845B] text-white shadow-sm mb-4">
-          <Layers className="w-6 h-6" />
+        <div className="flex justify-center mb-4">
+          <img
+            src="/logo.png"
+            alt="TaskFlow Logo"
+            className="h-12 w-auto object-contain"
+          />
         </div>
         <h2 className="text-2xl font-bold tracking-tight text-[#202938]">
           Sign in to TaskFlow

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Menu, X, LogOut } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 /**
@@ -40,19 +40,19 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#27845B] flex items-center justify-center text-white shadow-xs">
-              <Layers className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-base tracking-tight text-[#202938]">
-                  TaskFlow
-                </span>
-                <span className="hidden sm:inline-block text-[11px] bg-[#27845B]/10 text-[#27845B] font-medium px-2 py-0.5 rounded-full border border-[#27845B]/20">
-                  Golden Eagles
-                </span>
-              </div>
-            </div>
+            <img
+              src="/logo.png"
+              alt="TaskFlow Logo"
+              className="h-8 w-auto object-contain hidden sm:block"
+            />
+            <img
+              src="/logo-icon.png"
+              alt="TaskFlow Logo"
+              className="h-8 w-auto object-contain sm:hidden"
+            />
+            <span className="hidden md:inline-block text-[11px] bg-[#27845B]/10 text-[#27845B] font-medium px-2 py-0.5 rounded-full border border-[#27845B]/20">
+              Golden Eagles
+            </span>
           </div>
         </div>
 
