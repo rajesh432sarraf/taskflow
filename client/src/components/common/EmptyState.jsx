@@ -16,15 +16,15 @@ export default function EmptyState({
 }) {
   return (
     <div
-      className={`rounded-2xl border border-dashed border-slate-200 bg-white p-8 sm:p-12 text-center flex flex-col items-center justify-center shadow-xs transition-all ${className}`}
+      className={`rounded-3xl border border-dashed border-emerald-500/25 bg-white/[0.03] backdrop-blur-md p-8 sm:p-12 text-center flex flex-col items-center justify-center shadow-xl transition-all ${className}`}
     >
       {/* Icon Badge */}
-      <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-[#059669] mb-4 shadow-2xs">
-        <Icon className="w-7 h-7 text-[#059669]" />
+      <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mb-4 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+        <Icon className="w-7 h-7 text-emerald-400" />
       </div>
 
-      <h3 className="text-base font-bold text-slate-900 mb-1.5 tracking-tight">{title}</h3>
-      <p className="text-xs text-slate-500 max-w-sm mb-6 leading-relaxed">
+      <h3 className="text-base font-bold text-white mb-1.5 tracking-tight">{title}</h3>
+      <p className="text-xs text-slate-300 max-w-sm mb-6 leading-relaxed">
         {description}
       </p>
 
@@ -34,7 +34,7 @@ export default function EmptyState({
           size="md"
           icon={actionIcon}
           onClick={onAction}
-          className="shadow-sm font-semibold"
+          className="shadow-[0_0_15px_rgba(16,185,129,0.35)] font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950"
         >
           {actionLabel}
         </Button>

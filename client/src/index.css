@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Modern Precision SaaS Color System */
-  --color-brand-bg: #F8FAFC;
-  --color-brand-surface: #FFFFFF;
-  --color-brand-text: #0F172A;
-  --color-brand-subtext: #64748B;
+  /* Modern Luxury Emerald Theme System */
+  --color-brand-bg: #03140E;
+  --color-brand-surface: rgba(255, 255, 255, 0.04);
+  --color-brand-text: #F8FAFC;
+  --color-brand-subtext: #94A3B8;
   --color-brand-accent: #059669;
-  --color-brand-accent-hover: #047857;
-  --color-brand-border: #E2E8F0;
-  --color-brand-muted: #F1F5F9;
-  --color-brand-danger: #E11D48;
-  --color-brand-warning: #D97706;
+  --color-brand-accent-hover: #10B981;
+  --color-brand-border: rgba(16, 185, 129, 0.2);
+  --color-brand-muted: rgba(255, 255, 255, 0.08);
+  --color-brand-danger: #F43F5E;
+  --color-brand-warning: #F59E0B;
 }
 
 body {

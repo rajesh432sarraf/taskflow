@@ -143,27 +143,30 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Modern Precision Hero Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-white p-6 sm:p-7 shadow-xs border border-slate-200/80 bg-gradient-to-br from-white via-white to-emerald-50/30">
+      {/* Modern Luxury Dark Emerald Hero Card */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-emerald-950/40 p-6 sm:p-8 backdrop-blur-xl border border-emerald-500/25 shadow-2xl">
+        {/* Subtle Decorative Orbit Ring inside Hero */}
+        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border border-emerald-500/15 pointer-events-none" />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3 max-w-xl">
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-xs font-semibold text-emerald-800">
-              <span className="w-2 h-2 rounded-full bg-[#059669]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-xs font-semibold text-emerald-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
               <span>Daily Productivity Momentum</span>
-              <span className="text-emerald-300">•</span>
-              <span className="text-emerald-700 font-bold">
+              <span className="text-emerald-500/50">•</span>
+              <span className="text-emerald-300 font-bold">
                 {stats.overdueTasks > 0 ? `${stats.overdueTasks} Overdue` : 'All Clear'}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              Welcome back, <span className="text-[#059669]">{user?.name || 'User'}</span>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white leading-tight">
+              Welcome back, <span className="text-emerald-400">{user?.name || 'User'}</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-              You have <span className="font-semibold text-slate-900">{stats.pendingTasks} tasks</span> awaiting action and{' '}
-              <span className="font-semibold text-slate-900">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
+            <p className="text-xs sm:text-sm text-emerald-100/70 leading-relaxed font-normal">
+              You have <span className="font-bold text-white">{stats.pendingTasks} tasks</span> awaiting action and{' '}
+              <span className="font-bold text-white">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
             </p>
 
             <div className="pt-1">
@@ -173,7 +176,7 @@ export default function DashboardPage() {
                   setEditingTask(null);
                   setIsTaskModalOpen(true);
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#059669] hover:bg-[#047857] text-white text-xs font-bold transition-all shadow-xs hover:shadow-sm hover:shadow-emerald-600/25 active:scale-98 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-98 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create New Task</span>
@@ -182,7 +185,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right: Circular Radial Progress Dial */}
-          <div className="flex items-center gap-4 bg-slate-50/80 rounded-2xl p-4 sm:p-5 border border-slate-200/60 shrink-0 self-start md:self-auto">
+          <div className="flex items-center gap-4 bg-white/[0.04] backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-emerald-500/20 shrink-0 self-start md:self-auto shadow-lg">
             <div className="relative w-20 h-20 flex items-center justify-center">
               <svg className="w-20 h-20 -rotate-90" viewBox="0 0 100 100">
                 {/* Background Ring */}
@@ -190,7 +193,7 @@ export default function DashboardPage() {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#E2E8F0"
+                  stroke="rgba(255, 255, 255, 0.1)"
                   strokeWidth="8"
                   fill="none"
                 />
@@ -199,7 +202,7 @@ export default function DashboardPage() {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#059669"
+                  stroke="#10B981"
                   strokeWidth="8"
                   strokeDasharray={251.2}
                   strokeDashoffset={251.2 - (251.2 * completionRate) / 100}
@@ -210,21 +213,21 @@ export default function DashboardPage() {
               </svg>
 
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="text-lg font-extrabold text-slate-900 tracking-tight leading-none">
+                <span className="text-lg font-black text-white tracking-tight leading-none">
                   {completionRate}%
                 </span>
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mt-0.5">
+                <span className="text-[10px] text-emerald-300 uppercase tracking-wider font-semibold mt-0.5">
                   Done
                 </span>
               </div>
             </div>
 
             <div className="space-y-1 text-xs">
-              <div className="text-slate-500 font-medium">Completion Goal</div>
-              <div className="text-slate-900 text-sm font-bold">
+              <div className="text-emerald-200/70 font-medium">Completion Goal</div>
+              <div className="text-white text-sm font-bold">
                 {stats.completedTasks} of {stats.totalTasks} Done
               </div>
-              <div className="text-[11px] text-slate-400">
+              <div className="text-[11px] text-emerald-300/60">
                 {stats.totalTasks === 0
                   ? 'Start by adding a task'
                   : completionRate === 100
@@ -285,16 +288,16 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold text-[#0F172A]">
+              <h2 className="text-base font-bold text-white">
                 Recent Tasks
               </h2>
-              <p className="text-xs text-[#64748B]">
+              <p className="text-xs text-emerald-200/60">
                 Your most recently updated workflow items
               </p>
             </div>
             <Link
               to="/tasks"
-              className="text-xs font-bold text-[#059669] hover:text-[#047857] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-50"
+              className="text-xs font-bold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-500/10"
             >
               View all tasks
               <ArrowRight className="w-3.5 h-3.5" />
@@ -333,12 +336,12 @@ export default function DashboardPage() {
         {/* Right Column: Status & Priority Breakdown */}
         <div className="space-y-6">
           {/* Progress Overview Card */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+          <div className="bg-white/[0.04] backdrop-blur-md rounded-2xl border border-emerald-500/20 p-5 shadow-lg">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold text-slate-900">
+              <h3 className="text-sm font-bold text-white">
                 Productivity Progress
               </h3>
-              <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-[#059669]">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -346,20 +349,20 @@ export default function DashboardPage() {
             <div className="space-y-3">
               <div>
                 <div className="flex justify-between text-xs mb-1.5 font-semibold">
-                  <span className="text-slate-500">Velocity Rate</span>
-                  <span className="text-slate-900">{completionRate}%</span>
+                  <span className="text-emerald-200/70">Velocity Rate</span>
+                  <span className="text-white font-bold">{completionRate}%</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-[#059669] h-2.5 rounded-full transition-all duration-500"
+                    className="bg-emerald-400 shadow-[0_0_10px_#10B981] h-2.5 rounded-full transition-all duration-500"
                     style={{ width: `${completionRate}%` }}
                   />
                 </div>
               </div>
 
               {stats.overdueTasks > 0 && (
-                <div className="mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200/80 flex items-center gap-2.5 text-xs text-rose-700">
-                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-500 animate-pulse" />
+                <div className="mt-3 p-3 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center gap-2.5 text-xs text-rose-300">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-400 animate-pulse" />
                   <span>
                     Attention: <strong>{stats.overdueTasks}</strong> {stats.overdueTasks === 1 ? 'task is' : 'tasks are'} past due!
                   </span>
@@ -369,35 +372,35 @@ export default function DashboardPage() {
           </div>
 
           {/* Quick Stats Distribution */}
-          <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs">
-            <h3 className="text-sm font-bold text-[#0F172A] mb-3">
+          <div className="bg-white/[0.04] backdrop-blur-md rounded-2xl border border-emerald-500/20 p-5 shadow-lg">
+            <h3 className="text-sm font-bold text-white mb-3">
               Status Breakdown
             </h3>
             <ul className="space-y-3 text-xs">
-              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
-                <div className="flex items-center gap-2.5 font-medium text-slate-700">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_6px_#F59E0B]" />
+              <li className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-2.5 font-medium text-slate-300">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
                   <span>Pending</span>
                 </div>
-                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/10">
                   {stats.pendingTasks}
                 </span>
               </li>
-              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
-                <div className="flex items-center gap-2.5 font-medium text-slate-700">
-                  <span className="w-2.5 h-2.5 rounded-full bg-sky-500 shadow-[0_0_6px_#0EA5E9]" />
+              <li className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-2.5 font-medium text-slate-300">
+                  <span className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_6px_#0EA5E9]" />
                   <span>In Progress</span>
                 </div>
-                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/10">
                   {stats.inProgressTasks}
                 </span>
               </li>
-              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
-                <div className="flex items-center gap-2.5 font-medium text-slate-700">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_6px_#10B981]" />
+              <li className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-2.5 font-medium text-slate-300">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
                   <span>Completed</span>
                 </div>
-                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/10">
                   {stats.completedTasks}
                 </span>
               </li>

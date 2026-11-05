@@ -43,14 +43,14 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Sidebar Panel */}
       <aside
-        className={`fixed top-16 bottom-0 left-0 z-40 w-60 bg-white border-r border-[#E5E7EB] flex flex-col justify-between transition-transform duration-200 ease-in-out md:translate-x-0 ${
+        className={`fixed top-16 bottom-0 left-0 z-40 w-60 bg-[#061C16]/90 backdrop-blur-xl border-r border-emerald-500/20 flex flex-col justify-between transition-transform duration-200 ease-in-out md:translate-x-0 text-white ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="p-4 space-y-6">
           {/* Main Navigation Links */}
           <div>
-            <span className="text-[11px] font-semibold text-[#667085] uppercase tracking-wider block mb-2 px-3">
+            <span className="text-[11px] font-bold text-emerald-400/80 uppercase tracking-wider block mb-2 px-3">
               Navigation
             </span>
             <nav className="space-y-1">
@@ -68,18 +68,18 @@ export default function Sidebar({ isOpen, onClose }) {
                     onClick={() => {
                       if (window.innerWidth < 768) onClose();
                     }}
-                    className={`relative flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                    className={`relative flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all border ${
                       isItemActive
-                        ? 'bg-emerald-50 text-[#059669] shadow-2xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/35 shadow-[0_0_12px_rgba(16,185,129,0.2)] font-bold'
+                        : 'text-slate-300 hover:text-white hover:bg-white/[0.06] border-transparent'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isItemActive ? 'text-[#059669]' : 'text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 ${isItemActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                       <span>{item.label}</span>
                     </div>
                     {isItemActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
                     )}
                   </NavLink>
                 );
@@ -89,19 +89,19 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Bottom Sidebar Info & Logout */}
-        <div className="p-4 border-t border-[#E5E7EB] space-y-3">
+        <div className="p-4 border-t border-emerald-500/15 space-y-3">
           {user && (
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between text-xs">
+            <div className="p-2.5 rounded-xl bg-white/[0.04] border border-emerald-500/20 backdrop-blur-md flex items-center justify-between text-xs">
               <div className="flex items-center gap-2 min-w-0">
-                <div className="w-7 h-7 rounded-full bg-[#059669] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                <div className="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs flex items-center justify-center shadow-[0_0_10px_rgba(16,185,129,0.4)]">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-                <span className="truncate max-w-[110px] font-bold text-slate-800">
+                <span className="truncate max-w-[110px] font-bold text-white">
                   {user.name}
                 </span>
               </div>
-              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
+              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Online
               </span>
             </div>
@@ -110,7 +110,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             <span>Logout</span>

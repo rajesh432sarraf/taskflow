@@ -35,8 +35,8 @@ export default function HealthPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#202938]">System Health & Diagnostics</h1>
-          <p className="text-sm text-[#667085] mt-1">
+          <h1 className="text-2xl font-black tracking-tight text-white">System Health & Diagnostics</h1>
+          <p className="text-sm text-emerald-200/70 mt-1">
             Real-time status of backend services and database connection.
           </p>
         </div>
@@ -47,6 +47,7 @@ export default function HealthPage() {
           icon={RefreshCw}
           isLoading={loading}
           onClick={checkHealth}
+          className="border border-emerald-500/30 text-emerald-300 hover:text-white hover:bg-white/10"
         >
           Refresh Status
         </Button>
@@ -63,23 +64,26 @@ export default function HealthPage() {
       )}
 
       {data && (
-        <div className="bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-xs space-y-6">
-          <div className="flex items-center gap-3 pb-4 border-b border-[#E5E7EB]">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#27845B] flex items-center justify-center">
+        <div className="bg-white/[0.04] backdrop-blur-md rounded-2xl border border-emerald-500/20 p-6 shadow-xl space-y-6">
+          <div className="flex items-center gap-3 pb-4 border-b border-emerald-500/15">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.3)]">
               <Server className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-[#202938]">Endpoint: /api/health</h2>
-              <span className="text-xs text-[#667085]">Status: 200 OK</span>
+              <h2 className="text-base font-bold text-white">Endpoint: /api/health</h2>
+              <span className="text-xs text-emerald-300 font-semibold flex items-center gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Status: 200 OK • Database Connected
+              </span>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#F1F3F5] border border-[#E5E7EB]">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#667085] mb-2">
+          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-300 mb-2">
               <Terminal className="w-3.5 h-3.5" />
               <span>Full Diagnostic Response</span>
             </div>
-            <pre className="text-xs font-mono text-[#202938] overflow-x-auto p-3 bg-white rounded-lg border border-[#E5E7EB]">
+            <pre className="text-xs font-mono text-emerald-200/90 overflow-x-auto p-3.5 bg-black/40 rounded-lg border border-white/5">
               {JSON.stringify(data, null, 2)}
             </pre>
           </div>

@@ -162,7 +162,7 @@ export default function TaskForm({
       />
 
       {/* Action Buttons */}
-      <div className="pt-3 border-t border-[#E5E7EB] flex items-center justify-end gap-3">
+      <div className="pt-4 border-t border-emerald-500/20 flex items-center justify-end gap-3">
         <Button
           type="button"
           variant="secondary"

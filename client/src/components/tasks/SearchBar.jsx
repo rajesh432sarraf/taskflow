@@ -11,8 +11,8 @@ export default function SearchBar({
   className = '',
 }) {
   return (
-    <div className={`relative rounded-lg shadow-xs ${className}`}>
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#667085]">
+    <div className={`relative rounded-xl shadow-xs ${className}`}>
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-400">
         <Search className="w-4 h-4" />
       </div>
 
@@ -21,14 +21,14 @@ export default function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="block w-full rounded-xl border border-slate-200 bg-white pl-9 pr-9 py-2 text-sm text-slate-800 placeholder-slate-400 transition-colors focus:outline-hidden focus:ring-2 focus:ring-[#059669] focus:border-[#059669]"
+        className="block w-full rounded-xl border border-emerald-500/25 bg-white/[0.05] pl-9 pr-9 py-2 text-sm text-white placeholder-slate-400 transition-colors focus:outline-hidden focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
       />
 
       {value && (
         <button
           type="button"
           onClick={() => onChange('')}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#667085] hover:text-[#202938] cursor-pointer"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white cursor-pointer"
           aria-label="Clear search"
         >
           <X className="w-4 h-4" />

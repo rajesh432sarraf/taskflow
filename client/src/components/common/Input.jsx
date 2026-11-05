@@ -18,6 +18,7 @@ export default function Input({
   required = false,
   icon: Icon,
   className = '',
+  labelClassName = '',
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,15 +31,15 @@ export default function Input({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-semibold text-[#202938] mb-1.5"
+          className={`block text-xs font-semibold ${labelClassName || 'text-emerald-200/80'} mb-1.5`}
         >
-          {label} {required && <span className="text-[#D64545]">*</span>}
+          {label} {required && <span className="text-rose-400">*</span>}
         </label>
       )}
 
-      <div className="relative rounded-lg shadow-xs">
+      <div className="relative rounded-xl shadow-xs">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#667085]">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-400">
             <Icon className="w-4 h-4" />
           </div>
         )}
@@ -52,12 +53,12 @@ export default function Input({
           disabled={disabled}
           required={required}
           placeholder={placeholder}
-          className={`block w-full rounded-lg border text-sm text-[#202938] bg-white transition-colors focus:outline-hidden focus:ring-2 focus:ring-[#27845B] focus:border-[#27845B] disabled:bg-[#F1F3F5] disabled:text-[#667085] disabled:cursor-not-allowed ${
+          className={`block w-full rounded-xl border text-sm text-white bg-white/[0.05] placeholder-slate-400 transition-colors focus:outline-hidden focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 disabled:bg-white/[0.02] disabled:text-slate-500 disabled:cursor-not-allowed ${
             Icon ? 'pl-9' : 'pl-3'
           } ${isPassword ? 'pr-10' : 'pr-3'} py-2 ${
             error
-              ? 'border-[#D64545] focus:ring-[#D64545] focus:border-[#D64545]'
-              : 'border-[#E5E7EB]'
+              ? 'border-rose-500 focus:ring-rose-500 focus:border-rose-500'
+              : 'border-emerald-500/25'
           }`}
           {...props}
         />

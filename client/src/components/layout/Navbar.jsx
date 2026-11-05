@@ -18,28 +18,28 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
   }).format(new Date());
 
   return (
-    <header className="bg-white/90 backdrop-blur-md border-b border-[#E2E8F0] sticky top-0 z-30 shadow-xs">
+    <header className="bg-[#061C16]/80 backdrop-blur-xl border-b border-emerald-500/20 sticky top-0 z-30 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Left: Mobile Toggle & Brand Logo */}
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
-            className="md:hidden p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 focus:outline-hidden cursor-pointer"
+            className="md:hidden p-2 rounded-xl text-emerald-300 hover:text-white hover:bg-emerald-500/10 focus:outline-hidden cursor-pointer transition-colors"
             aria-label="Toggle navigation menu"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 px-2.5 py-1 rounded-xl bg-white/95 shadow-sm">
             <img
               src="/logo.png"
               alt="TaskFlow Logo"
-              className="h-8.5 w-auto object-contain hidden sm:block"
+              className="h-7 w-auto object-contain hidden sm:block"
             />
             <img
               src="/logo-icon.png"
               alt="TaskFlow Logo"
-              className="h-8 w-auto object-contain sm:hidden"
+              className="h-7 w-auto object-contain sm:hidden"
             />
           </div>
         </div>
@@ -47,10 +47,10 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
         {/* Right: Current Date & Welcome Message */}
         <div className="flex items-center">
           <div className="flex flex-col text-right">
-            <span className="text-xs font-bold text-[#0F172A]">
+            <span className="text-xs font-bold text-white">
               {user ? `Welcome back, ${user.name.split(' ')[0]}!` : 'Welcome back!'}
             </span>
-            <span className="text-[11px] text-slate-500 font-medium">{todayFormatted}</span>
+            <span className="text-[11px] text-emerald-200/70 font-medium">{todayFormatted}</span>
           </div>
         </div>
       </div>

@@ -5,10 +5,10 @@ import React from 'react';
  */
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-[#E5E7EB] py-4 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#667085] gap-2">
+    <footer className="bg-transparent border-t border-emerald-500/15 py-4 mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/60 gap-2">
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-[#202938]">TaskFlow</span>
+          <span className="font-semibold text-white">TaskFlow</span>
           <span>&bull;</span>
           <span>Personal Task &amp; Productivity Manager</span>
         </div>

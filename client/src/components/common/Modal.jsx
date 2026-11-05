@@ -46,29 +46,29 @@ export default function Modal({
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? 'modal-headline' : undefined}
-          className={`relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 w-full ${maxWidth} border border-[#E5E7EB]`}
+          className={`relative transform overflow-hidden rounded-3xl bg-[#061C16] text-left shadow-2xl transition-all sm:my-8 w-full ${maxWidth} border border-emerald-500/30 text-white backdrop-blur-xl`}
         >
           {/* Modal Header */}
           {(title || showCloseButton) && (
-            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#E5E7EB]">
+            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-emerald-500/20">
               <div>
                 {title && (
                   <h3
                     id="modal-headline"
-                    className="text-base font-semibold text-[#202938]"
+                    className="text-lg font-bold text-white tracking-tight"
                   >
                     {title}
                   </h3>
                 )}
                 {description && (
-                  <p className="mt-0.5 text-xs text-[#667085]">{description}</p>
+                  <p className="mt-0.5 text-xs text-emerald-200/70">{description}</p>
                 )}
               </div>
               {showCloseButton && (
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-lg p-1.5 text-[#667085] hover:text-[#202938] hover:bg-[#F1F3F5] transition-colors focus:outline-hidden"
+                  className="rounded-xl p-1.5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors focus:outline-hidden cursor-pointer"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />

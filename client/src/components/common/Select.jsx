@@ -17,6 +17,7 @@ export default function Select({
   disabled = false,
   required = false,
   className = '',
+  labelClassName = '',
   ...props
 }) {
   const selectId = id || name;
@@ -26,13 +27,13 @@ export default function Select({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold text-[#202938] mb-1.5"
+          className={`block text-xs font-semibold ${labelClassName || 'text-emerald-200/80'} mb-1.5`}
         >
-          {label} {required && <span className="text-[#D64545]">*</span>}
+          {label} {required && <span className="text-rose-400">*</span>}
         </label>
       )}
 
-      <div className="relative rounded-lg shadow-xs">
+      <div className="relative rounded-xl shadow-xs">
         <select
           id={selectId}
           name={name}
@@ -40,15 +41,15 @@ export default function Select({
           onChange={onChange}
           disabled={disabled}
           required={required}
-          className={`appearance-none block w-full rounded-lg border text-sm text-[#202938] bg-white transition-colors focus:outline-hidden focus:ring-2 focus:ring-[#27845B] focus:border-[#27845B] disabled:bg-[#F1F3F5] disabled:text-[#667085] disabled:cursor-not-allowed pl-3 pr-9 py-2 cursor-pointer ${
+          className={`appearance-none block w-full rounded-xl border text-sm text-white bg-[#06241b] transition-colors focus:outline-hidden focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 disabled:bg-white/[0.02] disabled:text-slate-500 disabled:cursor-not-allowed pl-3 pr-9 py-2 cursor-pointer ${
             error
-              ? 'border-[#D64545] focus:ring-[#D64545] focus:border-[#D64545]'
-              : 'border-[#E5E7EB]'
+              ? 'border-rose-500 focus:ring-rose-500 focus:border-rose-500'
+              : 'border-emerald-500/25'
           }`}
           {...props}
         >
           {placeholder && (
-            <option value="" disabled>
+            <option value="" disabled className="bg-[#06241b] text-slate-400">
               {placeholder}
             </option>
           )}
@@ -56,24 +57,23 @@ export default function Select({
             const val = typeof opt === 'object' ? opt.value : opt;
             const text = typeof opt === 'object' ? opt.label : opt;
             return (
-              <option key={val} value={val}>
+              <option key={val} value={val} className="bg-[#06241b] text-white">
                 {text}
               </option>
             );
           })}
         </select>
 
-        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#667085]">
+        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-emerald-400">
           <ChevronDown className="w-4 h-4" />
         </div>
       </div>
 
       {error ? (
-        <p className="mt-1 text-xs text-[#D64545]">{error}</p>
+        <p className="mt-1 text-xs text-rose-400 font-medium">{error}</p>
       ) : helperText ? (
-        <p className="mt-1 text-xs text-[#667085]">{helperText}</p>
+        <p className="mt-1 text-xs text-slate-400">{helperText}</p>
       ) : null}
     </div>
   );
 }
-

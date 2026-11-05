@@ -18,16 +18,16 @@ export default function FilterBar({
   return (
     <div className="flex flex-wrap items-center gap-3">
       {/* Status Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-slate-500">
-        <Filter className="w-3.5 h-3.5 text-[#059669]" />
-        <span className="font-medium hidden sm:inline">Status:</span>
+      <div className="flex items-center gap-1.5 text-xs text-emerald-200/70">
+        <Filter className="w-3.5 h-3.5 text-emerald-400" />
+        <span className="font-semibold hidden sm:inline">Status:</span>
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-800 px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#059669] cursor-pointer hover:border-slate-300 transition-colors"
+          className="rounded-xl border border-emerald-500/25 bg-[#06241b] text-xs font-semibold text-white px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-emerald-400 cursor-pointer hover:border-emerald-400 transition-colors"
         >
           {statusOptions.map((opt) => (
-            <option key={opt} value={opt}>
+            <option key={opt} value={opt} className="bg-[#06241b] text-white">
               {opt === 'All' ? 'All Statuses' : opt}
             </option>
           ))}
@@ -35,15 +35,15 @@ export default function FilterBar({
       </div>
 
       {/* Priority Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-slate-500">
-        <span className="font-medium hidden sm:inline">Priority:</span>
+      <div className="flex items-center gap-1.5 text-xs text-emerald-200/70">
+        <span className="font-semibold hidden sm:inline">Priority:</span>
         <select
           value={priority}
           onChange={(e) => onPriorityChange(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-800 px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#059669] cursor-pointer hover:border-slate-300 transition-colors"
+          className="rounded-xl border border-emerald-500/25 bg-[#06241b] text-xs font-semibold text-white px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-emerald-400 cursor-pointer hover:border-emerald-400 transition-colors"
         >
           {priorityOptions.map((opt) => (
-            <option key={opt} value={opt}>
+            <option key={opt} value={opt} className="bg-[#06241b] text-white">
               {opt === 'All' ? 'All Priorities' : opt}
             </option>
           ))}
@@ -55,7 +55,7 @@ export default function FilterBar({
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-1 text-xs font-medium text-[#667085] hover:text-[#202938] px-2 py-1 rounded-md hover:bg-[#F1F3F5] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-300 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
         >
           <RotateCcw className="w-3 h-3" />
           <span>Reset</span>
