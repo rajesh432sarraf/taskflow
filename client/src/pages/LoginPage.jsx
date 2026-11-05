@@ -8,9 +8,7 @@ import {
   CheckCircle2, 
   Clock, 
   TrendingUp, 
-  Sparkles, 
-  ShieldCheck, 
-  Zap 
+  ShieldCheck 
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Input from '../components/common/Input';
@@ -246,12 +244,6 @@ export default function LoginPage() {
         <div className="absolute right-12 bottom-12 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute left-8 top-1/3 w-64 h-64 bg-emerald-700/20 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Top Tagline */}
-        <div className="relative z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-emerald-500/30 text-xs font-semibold text-emerald-300 w-fit">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-          <span>TaskFlow Productivity Engine 2.0</span>
-        </div>
-
         {/* Center Content: Headline & 3 Floating Productivity Glass Cards */}
         <div className="relative z-10 my-auto space-y-8 max-w-lg">
           <div>
@@ -321,10 +313,6 @@ export default function LoginPage() {
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>Encrypted HTTP-Only Sessions</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-400" />
-            <span>Instant Cloud Sync</span>
           </div>
         </div>
       </div>
