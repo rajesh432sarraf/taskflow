@@ -1,12 +1,10 @@
 import React from 'react';
-import { ClipboardList } from 'lucide-react';
 import Button from './Button';
 
 /**
- * Reusable Empty State component with customizable title, icon, and call to action.
+ * Premium Reusable Empty State component with custom TaskFlow productivity artwork.
  */
 export default function EmptyState({
-  icon: Icon = ClipboardList,
   title = 'No tasks found',
   description = 'You do not have any tasks matching your criteria.',
   actionLabel,
@@ -16,14 +14,46 @@ export default function EmptyState({
 }) {
   return (
     <div
-      className={`rounded-2xl border border-dashed border-[#E5E7EB] bg-white p-10 text-center flex flex-col items-center justify-center ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-dashed border-[#E5E7EB] bg-gradient-to-b from-white to-[#F9FAFB] p-10 text-center flex flex-col items-center justify-center shadow-xs transition-all ${className}`}
     >
-      <div className="w-14 h-14 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] flex items-center justify-center text-[#667085] mb-4 shadow-2xs">
-        <Icon className="w-7 h-7 text-[#27845B]" />
+      {/* Background Radial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#27845B]/5 rounded-full blur-2xl pointer-events-none" />
+
+      {/* TaskFlow Productivity Vector Illustration */}
+      <div className="relative mb-5 w-28 h-28 flex items-center justify-center">
+        {/* Outer Circular Orbit Ring */}
+        <div className="absolute inset-0 rounded-full border border-dashed border-[#27845B]/25 animate-[spin_24s_linear_infinite]" />
+
+        {/* Orbiting Milestone Sparkles */}
+        <div className="absolute -top-1 right-2 w-3.5 h-3.5 rounded-full bg-[#FF6B4A] shadow-[0_0_12px_#FF6B4A] border-2 border-white" />
+        <div className="absolute -bottom-1 left-3 w-3 h-3 rounded-full bg-[#10B981] shadow-[0_0_10px_#10B981] border-2 border-white" />
+
+        {/* Center Illustration Artwork */}
+        <svg className="w-20 h-20 drop-shadow-sm" viewBox="0 0 80 80" fill="none">
+          {/* Clipboard Base */}
+          <rect x="18" y="16" width="44" height="52" rx="10" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="2" />
+          <rect x="22" y="20" width="36" height="44" rx="6" fill="#F8FAFC" />
+
+          {/* Top Clip */}
+          <rect x="30" y="12" width="20" height="8" rx="4" fill="#0F2E22" stroke="#27845B" strokeWidth="1.5" />
+          <circle cx="40" cy="16" r="2" fill="#34D399" />
+
+          {/* Task Lines & Checks */}
+          <circle cx="28" cy="30" r="3.5" fill="#10B981" />
+          <path d="M26.5 30l1 1 2-2" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="35" y="28.5" width="19" height="3" rx="1.5" fill="#94A3B8" />
+
+          <circle cx="28" cy="40" r="3.5" fill="#27845B" />
+          <path d="M26.5 40l1 1 2-2" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="35" y="38.5" width="15" height="3" rx="1.5" fill="#CBD5E1" />
+
+          <circle cx="28" cy="50" r="3.5" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="1.2" />
+          <rect x="35" y="48.5" width="17" height="3" rx="1.5" fill="#E2E8F0" />
+        </svg>
       </div>
 
-      <h3 className="text-base font-semibold text-[#202938] mb-1">{title}</h3>
-      <p className="text-xs text-[#667085] max-w-sm mb-6 leading-relaxed">
+      <h3 className="text-base font-bold text-[#1E293B] mb-1.5 tracking-tight">{title}</h3>
+      <p className="text-xs text-[#64748B] max-w-sm mb-6 leading-relaxed">
         {description}
       </p>
 
@@ -33,6 +63,7 @@ export default function EmptyState({
           size="md"
           icon={actionIcon}
           onClick={onAction}
+          className="shadow-md hover:shadow-lg hover:shadow-[#27845B]/20 transition-all cursor-pointer font-semibold"
         >
           {actionLabel}
         </Button>
@@ -40,4 +71,3 @@ export default function EmptyState({
     </div>
   );
 }
-

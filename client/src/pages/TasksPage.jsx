@@ -136,11 +136,18 @@ export default function TasksPage() {
       {/* Top Action Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#202938]">
-            My Tasks
-          </h1>
-          <p className="mt-1 text-xs text-[#667085]">
-            Manage, organize, and prioritize your daily responsibilities.
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-extrabold tracking-tight text-[#0F172A]">
+              My Tasks
+            </h1>
+            {!isLoading && (
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#27845B] border border-emerald-200">
+                {tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}
+              </span>
+            )}
+          </div>
+          <p className="mt-1 text-xs text-[#64748B]">
+            Organize, prioritize, and track your daily execution pipeline.
           </p>
         </div>
 
@@ -152,6 +159,7 @@ export default function TasksPage() {
             setEditingTask(null);
             setIsTaskModalOpen(true);
           }}
+          className="shadow-md hover:shadow-lg hover:shadow-[#27845B]/20 py-2.5 font-bold cursor-pointer"
         >
           Add Task
         </Button>
@@ -166,7 +174,7 @@ export default function TasksPage() {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4.5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <SearchBar
           value={searchTerm}
           onChange={setSearchTerm}

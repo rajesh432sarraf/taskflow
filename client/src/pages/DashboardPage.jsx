@@ -143,28 +143,102 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Top Welcome Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#202938]">
-            Dashboard
-          </h1>
-          <p className="mt-1 text-xs text-[#667085]">
-            Welcome back, <span className="font-semibold text-[#202938]">{user?.name}</span>. Here is your productivity summary for today.
-          </p>
-        </div>
+      {/* Luxury Dark Forest Emerald Hero Card */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#092218] via-[#0E3527] to-[#071A13] text-white p-6 sm:p-8 shadow-xl border border-emerald-500/20">
+        {/* Subtle Concentric Orbital Background Guides */}
+        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border border-emerald-500/10 pointer-events-none" />
+        <div className="absolute -right-32 -top-32 w-[420px] h-[420px] rounded-full border border-emerald-500/5 pointer-events-none" />
+        <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <Button
-          variant="primary"
-          size="md"
-          icon={Plus}
-          onClick={() => {
-            setEditingTask(null);
-            setIsTaskModalOpen(true);
-          }}
-        >
-          Add Task
-        </Button>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="space-y-3 max-w-xl">
+            {/* Status Pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-emerald-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34D399]" />
+              <span>Daily Productivity Momentum</span>
+              <span className="text-white/40">•</span>
+              <span className="text-[#FFB088] font-bold">
+                {stats.overdueTasks > 0 ? `${stats.overdueTasks} Overdue` : 'All Clear'}
+              </span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+              Welcome back, <span className="text-emerald-300">{user?.name || 'User'}</span>
+            </h1>
+
+            <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed font-normal">
+              You have <span className="font-semibold text-white">{stats.pendingTasks} tasks</span> awaiting action and{' '}
+              <span className="font-semibold text-white">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
+            </p>
+
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingTask(null);
+                  setIsTaskModalOpen(true);
+                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#27845B] hover:bg-[#206C4A] text-white text-xs font-bold transition-all shadow-[0_0_20px_rgba(39,132,91,0.4)] hover:shadow-[0_0_25px_rgba(39,132,91,0.6)] hover:scale-102 active:scale-98 cursor-pointer"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Create New Task</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Right: Circular Radial Progress Dial */}
+          <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 shrink-0 self-start md:self-auto">
+            <div className="relative w-24 h-24 flex items-center justify-center">
+              <svg className="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
+                {/* Background Ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  stroke="#123B2D"
+                  strokeWidth="8"
+                  fill="none"
+                />
+                {/* Animated Progress Ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  stroke="#10B981"
+                  strokeWidth="8"
+                  strokeDasharray={251.2}
+                  strokeDashoffset={251.2 - (251.2 * completionRate) / 100}
+                  strokeLinecap="round"
+                  fill="none"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span className="text-xl font-extrabold text-white tracking-tight leading-none">
+                  {completionRate}%
+                </span>
+                <span className="text-[10px] text-emerald-200 uppercase tracking-wider font-semibold mt-0.5">
+                  Done
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-1 text-xs">
+              <div className="text-emerald-200 font-semibold">Completion Goal</div>
+              <div className="text-white text-sm font-bold">
+                {stats.completedTasks} of {stats.totalTasks} Done
+              </div>
+              <div className="text-[11px] text-white/60">
+                {stats.totalTasks === 0
+                  ? 'Start by adding a task'
+                  : completionRate === 100
+                  ? '🎉 All tasks finished!'
+                  : `${stats.pendingTasks + stats.inProgressTasks} tasks remaining`}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {error && (
@@ -197,7 +271,7 @@ export default function DashboardPage() {
           title="In Progress"
           value={stats.inProgressTasks}
           icon={Hourglass}
-          subtext="Currently being worked on"
+          subtext="Currently active"
           variant="info"
         />
 
@@ -215,12 +289,17 @@ export default function DashboardPage() {
         {/* Left Column (2 spans): Recent Tasks */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-[#202938]">
-              Recent Tasks
-            </h2>
+            <div>
+              <h2 className="text-base font-bold text-[#0F172A]">
+                Recent Tasks
+              </h2>
+              <p className="text-xs text-[#64748B]">
+                Your most recently updated workflow items
+              </p>
+            </div>
             <Link
               to="/tasks"
-              className="text-xs font-semibold text-[#27845B] hover:text-[#206C4A] inline-flex items-center gap-1 transition-colors"
+              className="text-xs font-bold text-[#27845B] hover:text-[#206C4A] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-50"
             >
               View all tasks
               <ArrowRight className="w-3.5 h-3.5" />
@@ -229,8 +308,8 @@ export default function DashboardPage() {
 
           {recentTasks.length === 0 ? (
             <EmptyState
-              title="No tasks yet"
-              description="Get started by creating your very first task to track your progress."
+              title="No tasks in your workspace"
+              description="Get started by creating your very first task to track your progress and boost your daily output."
               actionLabel="Create Task"
               actionIcon={Plus}
               onAction={() => {
@@ -259,33 +338,35 @@ export default function DashboardPage() {
         {/* Right Column: Status & Priority Breakdown */}
         <div className="space-y-6">
           {/* Progress Overview Card */}
-          <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs">
+          <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-[#202938]">
+              <h3 className="text-sm font-bold text-[#0F172A]">
                 Productivity Progress
               </h3>
-              <TrendingUp className="w-4 h-4 text-[#27845B]" />
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-[#27845B]">
+                <TrendingUp className="w-4 h-4" />
+              </div>
             </div>
 
             <div className="space-y-3">
               <div>
-                <div className="flex justify-between text-xs mb-1 font-medium">
-                  <span className="text-[#667085]">Completion Rate</span>
-                  <span className="text-[#202938] font-bold">{completionRate}%</span>
+                <div className="flex justify-between text-xs mb-1.5 font-semibold">
+                  <span className="text-[#64748B]">Velocity Rate</span>
+                  <span className="text-[#0F172A]">{completionRate}%</span>
                 </div>
-                <div className="w-full bg-[#F1F3F5] rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-[#27845B] h-2 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-[#27845B] to-[#10B981] h-2.5 rounded-full transition-all duration-700 shadow-[0_0_10px_#10B981]"
                     style={{ width: `${completionRate}%` }}
                   />
                 </div>
               </div>
 
               {stats.overdueTasks > 0 && (
-                <div className="mt-3 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-[#D64545]">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                <div className="mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200/80 flex items-center gap-2.5 text-xs text-rose-700">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-500 animate-pulse" />
                   <span>
-                    You have <strong>{stats.overdueTasks}</strong> overdue {stats.overdueTasks === 1 ? 'task' : 'tasks'}!
+                    Attention: <strong>{stats.overdueTasks}</strong> {stats.overdueTasks === 1 ? 'task is' : 'tasks are'} past due!
                   </span>
                 </div>
               )}
@@ -293,31 +374,37 @@ export default function DashboardPage() {
           </div>
 
           {/* Quick Stats Distribution */}
-          <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs">
-            <h3 className="text-sm font-semibold text-[#202938] mb-3">
+          <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs">
+            <h3 className="text-sm font-bold text-[#0F172A] mb-3">
               Status Breakdown
             </h3>
-            <ul className="space-y-2.5 text-xs">
-              <li className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[#667085]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+            <ul className="space-y-3 text-xs">
+              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
+                <div className="flex items-center gap-2.5 font-medium text-slate-700">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_6px_#F59E0B]" />
                   <span>Pending</span>
                 </div>
-                <span className="font-semibold text-[#202938]">{stats.pendingTasks}</span>
+                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                  {stats.pendingTasks}
+                </span>
               </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[#667085]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
+                <div className="flex items-center gap-2.5 font-medium text-slate-700">
+                  <span className="w-2.5 h-2.5 rounded-full bg-sky-500 shadow-[0_0_6px_#0EA5E9]" />
                   <span>In Progress</span>
                 </div>
-                <span className="font-semibold text-[#202938]">{stats.inProgressTasks}</span>
+                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                  {stats.inProgressTasks}
+                </span>
               </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[#667085]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#27845B]" />
+              <li className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
+                <div className="flex items-center gap-2.5 font-medium text-slate-700">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_6px_#10B981]" />
                   <span>Completed</span>
                 </div>
-                <span className="font-semibold text-[#202938]">{stats.completedTasks}</span>
+                <span className="font-bold text-[#0F172A] bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                  {stats.completedTasks}
+                </span>
               </li>
             </ul>
           </div>

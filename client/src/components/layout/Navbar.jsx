@@ -18,13 +18,13 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
   }).format(new Date());
 
   return (
-    <header className="bg-white border-b border-[#E5E7EB] sticky top-0 z-30 shadow-xs">
+    <header className="bg-white/90 backdrop-blur-md border-b border-[#E2E8F0] sticky top-0 z-30 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Left: Mobile Toggle & Brand Logo */}
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
-            className="md:hidden p-2 rounded-lg text-[#667085] hover:text-[#202938] hover:bg-[#F1F3F5] focus:outline-hidden cursor-pointer"
+            className="md:hidden p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 focus:outline-hidden cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -34,7 +34,7 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
             <img
               src="/logo.png"
               alt="TaskFlow Logo"
-              className="h-8 w-auto object-contain hidden sm:block"
+              className="h-8.5 w-auto object-contain hidden sm:block"
             />
             <img
               src="/logo-icon.png"
@@ -47,10 +47,10 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }) {
         {/* Right: Current Date & Welcome Message */}
         <div className="flex items-center">
           <div className="flex flex-col text-right">
-            <span className="text-xs font-semibold text-[#202938]">
+            <span className="text-xs font-bold text-[#0F172A]">
               {user ? `Welcome back, ${user.name.split(' ')[0]}!` : 'Welcome back!'}
             </span>
-            <span className="text-[11px] text-[#667085]">{todayFormatted}</span>
+            <span className="text-[11px] text-slate-500 font-medium">{todayFormatted}</span>
           </div>
         </div>
       </div>
