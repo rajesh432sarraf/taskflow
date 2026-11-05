@@ -26,6 +26,16 @@ export const authService = {
   },
 
   /**
+   * Log into or register account via Google Authentication.
+   * @param {Object} googleData - { name, email, googleId, avatar }
+   * @returns {Promise<Object>} API response with user data
+   */
+  async googleLogin(googleData) {
+    const response = await api.post('/auth/google', googleData);
+    return response.data;
+  },
+
+  /**
    * Log out of current session.
    * Clears HTTP-only cookie on the backend.
    * @returns {Promise<Object>}

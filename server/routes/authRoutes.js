@@ -4,6 +4,7 @@ const {
   login,
   logout,
   getMe,
+  googleAuth,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const {
@@ -15,6 +16,7 @@ const router = express.Router();
 
 router.post('/register', validateRegister, register);
 router.post('/login', validateLogin, login);
+router.post('/google', googleAuth);
 router.post('/logout', protect, logout);
 router.get('/me', protect, getMe);
 

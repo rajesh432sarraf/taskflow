@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import authService from '../services/authService';
+import { auth, googleProvider, signInWithPopup } from '../config/firebase';
 
 const AuthContext = createContext(null);
 
@@ -79,6 +80,42 @@ export function AuthProvider({ children }) {
   };
 
   /**
+   * Log in or sign up with Google via Firebase.
+   */
+  const loginWithGoogle = async () => {
+    try {
+      setError(null);
+      if (!auth) {
+        throw new Error('Google Sign-In is pending Firebase configuration. Please configure VITE_FIREBASE_* keys.');
+      }
+      const result = await signInWithPopup(auth, googleProvider);
+      const googleUser = result.user;
+
+      const payload = {
+        name: googleUser.displayName || 'Google User',
+        email: googleUser.email,
+        googleId: googleUser.uid,
+        avatar: googleUser.photoURL || '',
+      };
+
+      const data = await authService.googleLogin(payload);
+      if (data && data.success && data.data) {
+        const userData = data.data.user || data.data;
+        setUser(userData);
+        return { success: true, user: userData };
+      }
+      throw new Error(data?.message || 'Google authentication failed');
+    } catch (err) {
+      if (err.code === 'auth/popup-closed-by-user') {
+        return { success: false, cancelled: true };
+      }
+      const message = err.response?.data?.message || err.message || 'Google sign-in failed';
+      setError(message);
+      return { success: false, error: message };
+    }
+  };
+
+  /**
    * Log out of current session.
    */
   const logout = async () => {
@@ -99,6 +136,7 @@ export function AuthProvider({ children }) {
     isAuthenticated: !!user,
     login,
     register,
+    loginWithGoogle,
     logout,
     checkAuth,
   };
