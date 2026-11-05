@@ -213,10 +213,31 @@ TaskFlow server running in development mode on port 5000.
 - **`server/nodemon.json`:**
   - Added dedicated nodemon configuration with restricted watch scope (`server.js`, `routes`, `middleware`, `models`, `config`), 500ms debounce, and explicit ignores for `.git` and `node_modules`.
 
-### 8.3 Post-Fix Verification Evidence
-- **Nodemon Longevity Test:** Started via `npx nodemon server.js`. Verified process stayed running (`HasExited: False`, uptime 35s+).
-- **Health Check Response:** `GET http://localhost:5000/api/health` returned HTTP 200 with `{ "success": true, "database": "disconnected" }`.
-- **Frontend Axios Integration:** Axios request from frontend client returned `AXIOS_STATUS: 200`.
+### 8.3 Post-Fix 35-Second Stability & Longevity Evidence
+A comprehensive 35-second uninterrupted longevity test was executed with nodemon running (`server.js`) without modifying source files:
+- **Process ID & State:** PID `26124`, `HasExited: False` (maintained identical process ID across entire test duration; zero crashes, zero restart loops).
+- **Initial Health Ping (T+5s):**
+  - Status: `200 OK`
+  - Timestamp: `2026-11-05T10:51:02.905Z`
+  - Uptime: `140s`
+  - Database: `"disconnected"`
+- **Final Health Ping (T+35s - 30s later without file changes):**
+  - Status: `200 OK`
+  - Timestamp: `2026-11-05T10:51:33.098Z`
+  - Uptime: `170s` (Demonstrates unbroken 30s elapsed execution time)
+  - Database: `"disconnected"`
+- **Frontend Axios Health Ping:**
+  - Status: `200 OK`
+  - Response Message: `"TaskFlow API is healthy and operational"`
+  - UI Badge State: `"API Operational"` (verified matching `App.jsx` green status badge)
+
+### 8.4 Role of `server/nodemon.json`
+Default nodemon behavior monitors all files in the current and parent directories (`*.*`). On Windows, file metadata touches, Git index staging, or temporary editor saves (`.tmp`) can trigger rapid, successive restart commands.
+Without a debounce window, nodemon attempts to start a new Node instance before the previous socket has completely released port 5000 from the OS networking stack (`TIME_WAIT`).
+`server/nodemon.json` eliminates this risk by:
+1. Restricting watch paths exclusively to backend source directories (`server.js`, `config/`, `controllers/`, `middleware/`, `models/`, `routes/`, `utils/`).
+2. Ignoring non-runtime paths (`node_modules`, `.git`).
+3. Adding a 500ms restart delay (`"delay": 500`) to ensure socket handles are fully closed before a new instance is spawned.
 
 ---
 
