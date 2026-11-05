@@ -1,32 +1,73 @@
-# Dependencies
+# ==============================================================================
+# TaskFlow Security & Git Ignore Configuration
+# Protects secrets, credentials, environment files, and build artifacts from Git
+# ==============================================================================
+
+# Environment & Secret Files (CRITICAL: Never commit passwords or connection strings)
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+*.env.development
+*.env.development.local
+*.env.test
+*.env.test.local
+*.env.production
+*.env.production.local
+.env.backup
+.env.save
+
+# SSL Certificates, Private Keys & Tokens
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+
+# Database Exports & Local Dumps
+*.sqlite
+*.sqlite3
+*.dump
+dump/
+
+# Node.js Dependencies
 node_modules/
+client/node_modules/
+server/node_modules/
 /.pnp
 .pnp.js
 
-# Production build outputs
+# Build Outputs & Bundles
 dist/
+client/dist/
 build/
+*.tsbuildinfo
 
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
+# Debug & Execution Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Editor & OS files
+# Operating System Files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# IDE & Editor Caches
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Testing
+# Testing & Coverage
 coverage/
-
+.nyc_output/
