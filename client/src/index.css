@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #F7F8FA;
+  /* Palette extracted directly from Niche Luxury Design */
+  --color-brand-obsidian: #010001;
+  --color-brand-midnight: #133336;
+  --color-brand-deep-teal: #285F6B;
+  --color-brand-teal: #367D8A;
+  --color-brand-white: #FFFFFF;
+
+  --color-brand-bg: #F8FAFB;
   --color-brand-surface: #FFFFFF;
-  --color-brand-text: #202938;
-  --color-brand-subtext: #667085;
-  --color-brand-accent: #27845B;
-  --color-brand-accent-hover: #206C4A;
-  --color-brand-border: #E5E7EB;
-  --color-brand-muted: #F1F3F5;
+  --color-brand-text: #0F172A;
+  --color-brand-subtext: #64748B;
+  --color-brand-accent: #367D8A;
+  --color-brand-accent-hover: #285F6B;
+  --color-brand-border: #E2E8F0;
+  --color-brand-muted: #F1F5F9;
   --color-brand-danger: #D64545;
   --color-brand-warning: #B7791F;
 }

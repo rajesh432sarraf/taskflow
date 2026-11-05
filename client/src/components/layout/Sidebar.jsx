@@ -70,16 +70,16 @@ export default function Sidebar({ isOpen, onClose }) {
                     }}
                     className={`relative flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                       isItemActive
-                        ? 'bg-[#27845B]/10 text-[#27845B] shadow-2xs'
+                        ? 'bg-[#367D8A]/10 text-[#367D8A] shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isItemActive ? 'text-[#27845B]' : 'text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 ${isItemActive ? 'text-[#367D8A]' : 'text-slate-400'}`} />
                       <span>{item.label}</span>
                     </div>
                     {isItemActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#27845B] shadow-[0_0_6px_#10B981]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#367D8A] shadow-[0_0_8px_#367D8A]" />
                     )}
                   </NavLink>
                 );
@@ -93,15 +93,15 @@ export default function Sidebar({ isOpen, onClose }) {
           {user && (
             <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2 min-w-0">
-                <div className="w-7 h-7 rounded-full bg-[#27845B] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                <div className="w-7 h-7 rounded-full bg-[#367D8A] text-white font-bold text-xs flex items-center justify-center shadow-xs">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <span className="truncate max-w-[110px] font-bold text-slate-800">
                   {user.name}
                 </span>
               </div>
-              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-100/80 text-emerald-800 px-2 py-0.5 rounded-full font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1 text-[10px] bg-[#367D8A]/15 text-[#285F6B] px-2 py-0.5 rounded-full font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#367D8A] animate-pulse" />
                 Online
               </span>
             </div>

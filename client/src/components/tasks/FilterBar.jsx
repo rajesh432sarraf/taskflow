@@ -18,13 +18,13 @@ export default function FilterBar({
   return (
     <div className="flex flex-wrap items-center gap-3">
       {/* Status Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-[#667085]">
-        <Filter className="w-3.5 h-3.5 text-[#27845B]" />
+      <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
+        <Filter className="w-3.5 h-3.5 text-[#367D8A]" />
         <span className="font-medium hidden sm:inline">Status:</span>
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="rounded-lg border border-[#E5E7EB] bg-white text-xs font-medium text-[#202938] px-2.5 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#27845B] cursor-pointer"
+          className="rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#367D8A] cursor-pointer hover:border-[#367D8A]/40 transition-colors"
         >
           {statusOptions.map((opt) => (
             <option key={opt} value={opt}>
@@ -35,12 +35,12 @@ export default function FilterBar({
       </div>
 
       {/* Priority Filter */}
-      <div className="flex items-center gap-1.5 text-xs text-[#667085]">
+      <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
         <span className="font-medium hidden sm:inline">Priority:</span>
         <select
           value={priority}
           onChange={(e) => onPriorityChange(e.target.value)}
-          className="rounded-lg border border-[#E5E7EB] bg-white text-xs font-medium text-[#202938] px-2.5 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#27845B] cursor-pointer"
+          className="rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#367D8A] cursor-pointer hover:border-[#367D8A]/40 transition-colors"
         >
           {priorityOptions.map((opt) => (
             <option key={opt} value={opt}>

@@ -143,30 +143,30 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Luxury Dark Forest Emerald Hero Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#092218] via-[#0E3527] to-[#071A13] text-white p-6 sm:p-8 shadow-xl border border-emerald-500/20">
+      {/* Luxury Dark Forest Emerald & Niche Teal Hero Card */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#010001] via-[#133336] to-[#285F6B] text-white p-6 sm:p-8 shadow-2xl border border-[#367D8A]/30">
         {/* Subtle Concentric Orbital Background Guides */}
-        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border border-emerald-500/10 pointer-events-none" />
-        <div className="absolute -right-32 -top-32 w-[420px] h-[420px] rounded-full border border-emerald-500/5 pointer-events-none" />
-        <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border border-[#367D8A]/15 pointer-events-none" />
+        <div className="absolute -right-32 -top-32 w-[420px] h-[420px] rounded-full border border-[#367D8A]/10 pointer-events-none" />
+        <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-64 h-64 bg-[#367D8A]/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3 max-w-xl">
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-emerald-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34D399]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-[#FFFFFF]">
+              <span className="w-2 h-2 rounded-full bg-[#367D8A] shadow-[0_0_8px_#367D8A]" />
               <span>Daily Productivity Momentum</span>
               <span className="text-white/40">•</span>
-              <span className="text-[#FFB088] font-bold">
+              <span className="text-[#367D8A] font-bold">
                 {stats.overdueTasks > 0 ? `${stats.overdueTasks} Overdue` : 'All Clear'}
               </span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-              Welcome back, <span className="text-emerald-300">{user?.name || 'User'}</span>
+              Welcome back, <span className="text-[#367D8A]">{user?.name || 'User'}</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal">
               You have <span className="font-semibold text-white">{stats.pendingTasks} tasks</span> awaiting action and{' '}
               <span className="font-semibold text-white">{stats.inProgressTasks} in progress</span>. Keep the momentum going!
             </p>
@@ -178,7 +178,7 @@ export default function DashboardPage() {
                   setEditingTask(null);
                   setIsTaskModalOpen(true);
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#27845B] hover:bg-[#206C4A] text-white text-xs font-bold transition-all shadow-[0_0_20px_rgba(39,132,91,0.4)] hover:shadow-[0_0_25px_rgba(39,132,91,0.6)] hover:scale-102 active:scale-98 cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#367D8A] hover:bg-[#285F6B] text-white text-xs font-bold transition-all shadow-[0_0_20px_rgba(54,125,138,0.4)] hover:shadow-[0_0_25px_rgba(54,125,138,0.6)] hover:scale-102 active:scale-98 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create New Task</span>
@@ -195,7 +195,7 @@ export default function DashboardPage() {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#123B2D"
+                  stroke="#133336"
                   strokeWidth="8"
                   fill="none"
                 />
@@ -204,7 +204,7 @@ export default function DashboardPage() {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#10B981"
+                  stroke="#367D8A"
                   strokeWidth="8"
                   strokeDasharray={251.2}
                   strokeDashoffset={251.2 - (251.2 * completionRate) / 100}
@@ -218,14 +218,14 @@ export default function DashboardPage() {
                 <span className="text-xl font-extrabold text-white tracking-tight leading-none">
                   {completionRate}%
                 </span>
-                <span className="text-[10px] text-emerald-200 uppercase tracking-wider font-semibold mt-0.5">
+                <span className="text-[10px] text-[#367D8A] uppercase tracking-wider font-semibold mt-0.5">
                   Done
                 </span>
               </div>
             </div>
 
             <div className="space-y-1 text-xs">
-              <div className="text-emerald-200 font-semibold">Completion Goal</div>
+              <div className="text-slate-200 font-semibold">Completion Goal</div>
               <div className="text-white text-sm font-bold">
                 {stats.completedTasks} of {stats.totalTasks} Done
               </div>
@@ -299,7 +299,7 @@ export default function DashboardPage() {
             </div>
             <Link
               to="/tasks"
-              className="text-xs font-bold text-[#27845B] hover:text-[#206C4A] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-50"
+              className="text-xs font-bold text-[#367D8A] hover:text-[#285F6B] inline-flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-[#367D8A]/10"
             >
               View all tasks
               <ArrowRight className="w-3.5 h-3.5" />
@@ -343,7 +343,7 @@ export default function DashboardPage() {
               <h3 className="text-sm font-bold text-[#0F172A]">
                 Productivity Progress
               </h3>
-              <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-[#27845B]">
+              <div className="w-7 h-7 rounded-lg bg-[#367D8A]/10 flex items-center justify-center text-[#367D8A]">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -356,7 +356,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#27845B] to-[#10B981] h-2.5 rounded-full transition-all duration-700 shadow-[0_0_10px_#10B981]"
+                    className="bg-gradient-to-r from-[#285F6B] to-[#367D8A] h-2.5 rounded-full transition-all duration-700 shadow-[0_0_10px_#367D8A]"
                     style={{ width: `${completionRate}%` }}
                   />
                 </div>

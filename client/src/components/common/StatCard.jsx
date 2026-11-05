@@ -15,10 +15,10 @@ export default function StatCard({
 }) {
   const variantStyles = {
     default: {
-      border: 'hover:border-[#27845B]/40',
-      accentGlow: 'bg-[#27845B]',
-      iconBg: 'bg-[#27845B]/10 text-[#27845B] border-[#27845B]/20',
-      badge: 'bg-[#27845B]/10 text-[#27845B]',
+      border: 'hover:border-[#367D8A]/50',
+      accentGlow: 'bg-[#367D8A]',
+      iconBg: 'bg-[#367D8A]/10 text-[#367D8A] border-[#367D8A]/30',
+      badge: 'bg-[#367D8A]/15 text-[#285F6B]',
     },
     warning: {
       border: 'hover:border-amber-400/50',
